@@ -1,11 +1,19 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { SectionHeading } from "@/components/ui/section-heading"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Play, ArrowRight } from "lucide-react"
-import Link from "next/link"
+import { useRef, useEffect } from "react";
+import { motion } from "framer-motion";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import dynamic from "next/dynamic";
+
+const ReactPlayer = dynamic(() => import("react-player"), { ssr: false });
+import { SectionHeading } from "@/components/ui/section-heading";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Play, ArrowRight } from "lucide-react";
+import Link from "next/link";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const videos = [
   {
@@ -44,7 +52,7 @@ const videos = [
     duration: "4:05",
     gradient: "from-[#D6B787] to-[#8E7C6E]",
   },
-]
+];
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -52,64 +60,79 @@ const containerVariants = {
     opacity: 1,
     transition: { staggerChildren: 0.1 },
   },
-}
+};
 
 const cardVariants = {
   hidden: { opacity: 0, y: 30 },
   visible: {
-    opacity: 1,
-    y: 0,
+    opacity: 1, y: 0,
     transition: { duration: 0.5, ease: "easeOut" as const },
   },
-}
+};
 
 export function VideoLibrary() {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        ".video-card",
+        { y: 40, opacity: 0 },
+        {
+          y: 0, opacity: 1,
+          duration: 0.6,
+          stagger: 0.08,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: ".video-grid",
+            start: "top 85%",
+            toggleActions: "play none none none",
+          },
+        }
+      );
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section className="bg-[#3A281E] section-padding">
-      <div className="container mx-auto px-4">
+    <section ref={sectionRef} className="bg-[#3A281E] section-padding overflow-hidden">
+      <div className="container-custom">
         <SectionHeading
           title="Video Library"
           subtitle="Watch our procedures, patient stories, and expert insights"
         />
 
-        <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-        >
+        <div className="video-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
           {videos.map((video, index) => (
-            <motion.div
-              key={index}
-              className="group relative rounded-lg overflow-hidden cursor-pointer"
-              variants={cardVariants}
-            >
-              <div
-                className={`relative w-full aspect-video bg-gradient-to-br ${video.gradient} flex items-center justify-center`}
-              >
-                <div className="absolute inset-0 bg-[#241710]/40 group-hover:bg-[#241710]/60 transition-colors duration-300" />
-                <div className="relative z-10 w-16 h-16 rounded-full bg-[#D6B787]/90 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                  <Play className="w-6 h-6 text-[#241710] ml-0.5" fill="#241710" />
-                </div>
-                <span className="absolute bottom-3 right-3 z-10 bg-[#241710]/80 text-[#F6F0EA] text-xs px-2 py-1 rounded font-mono">
+            <div key={index} className="video-card group relative rounded-xl overflow-hidden cursor-pointer">
+              <div className="relative w-full aspect-video bg-[#2B1C15] flex items-center justify-center overflow-hidden">
+                <ReactPlayer
+                  src={`https://www.youtube.com/watch?v=dQw4w9WgXcQ`}
+                  light
+                  width="100%"
+                  height="100%"
+                  playIcon={
+                    <div className="w-16 h-16 rounded-full bg-[rgba(214,183,135,0.9)] flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                      <Play className="w-6 h-6 text-[#241710] ml-0.5" fill="#241710" />
+                    </div>
+                  }
+                />
+                <span className="absolute bottom-3 right-3 z-10 bg-[rgba(36,23,16,0.8)] backdrop-blur-sm text-[#F6F0EA] text-[10px] px-2 py-1 rounded-full font-mono">
                   {video.duration}
                 </span>
               </div>
-              <div className="p-4 bg-[#2B1C15]">
-                <Badge
-                  variant="outline"
-                  className="border-[rgba(214,183,135,0.25)] text-[#D6B787] text-xs mb-2"
-                >
+              <div className="p-4 bg-[#2B1C15] border-t border-[rgba(214,183,135,0.05)]">
+                <Badge variant="outline" className="border-[rgba(214,183,135,0.2)] text-[#D6B787] text-[10px] mb-2">
                   {video.category}
                 </Badge>
-                <h3 className="text-[#F6F0EA] font-semibold text-sm leading-snug line-clamp-2">
+                <h3 className="text-[#F6F0EA] font-heading text-sm leading-snug line-clamp-2">
                   {video.title}
                 </h3>
               </div>
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
 
         <motion.div
           className="flex justify-center mt-12"
@@ -119,10 +142,7 @@ export function VideoLibrary() {
           transition={{ delay: 0.3, duration: 0.5 }}
         >
           <Link href="/media">
-            <Button
-              variant="outline"
-              className="border-[#D6B787] text-[#D6B787] hover:bg-[#D6B787] hover:text-[#241710] transition-colors duration-300"
-            >
+            <Button variant="outline">
               View More Videos
               <ArrowRight className="ml-2 w-4 h-4" />
             </Button>
@@ -130,5 +150,5 @@ export function VideoLibrary() {
         </motion.div>
       </div>
     </section>
-  )
+  );
 }
