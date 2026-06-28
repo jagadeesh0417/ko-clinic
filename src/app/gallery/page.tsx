@@ -2,29 +2,13 @@
 
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { X, Maximize2 } from "lucide-react"
+import { images } from "@/lib/images"
 
 const categories = ["All", "Clinic", "Treatments", "Results", "Team", "Events"]
-
-const galleryItems = [
-  { id: 1, category: "Clinic", title: "Reception Lounge", gradient: "from-[#241710] to-[#3A281E]" },
-  { id: 2, category: "Treatments", title: "Laser Suite", gradient: "from-[#3A281E] to-[#2B1C15]" },
-  { id: 3, category: "Results", title: "Skin Rejuvenation", gradient: "from-[#2B1C15] to-[#D6B787]" },
-  { id: 4, category: "Team", title: "Dr. Sarah Mitchell", gradient: "from-[#D6B787] to-[#C5A067]" },
-  { id: 5, category: "Events", title: "Grand Opening", gradient: "from-[#C5A067] to-[#B78B5E]" },
-  { id: 6, category: "Clinic", title: "Treatment Room", gradient: "from-[#B78B5E] to-[#241710]" },
-  { id: 7, category: "Treatments", title: "HydraFacial Station", gradient: "from-[#3A281E] to-[#D6B787]" },
-  { id: 8, category: "Results", title: "Botox Transformation", gradient: "from-[#2B1C15] to-[#C5A067]" },
-  { id: 9, category: "Team", title: "Consultation Team", gradient: "from-[#241710] to-[#B78B5E]" },
-  { id: 10, category: "Events", title: "Media Launch", gradient: "from-[#D6B787] to-[#3A281E]" },
-  { id: 11, category: "Clinic", title: "VIP Lounge", gradient: "from-[#C5A067] to-[#2B1C15]" },
-  { id: 12, category: "Treatments", title: "IV Therapy Room", gradient: "from-[#B78B5E] to-[#241710]" },
-  { id: 13, category: "Results", title: "Body Sculpting", gradient: "from-[#3A281E] to-[#C5A067]" },
-  { id: 14, category: "Team", title: "Aesthetic Specialists", gradient: "from-[#2B1C15] to-[#D6B787]" },
-  { id: 15, category: "Events", title: "Client Appreciation", gradient: "from-[#D6B787] to-[#241710]" },
-]
 
 const itemVariants = {
   hidden: { opacity: 0, y: 20 },
@@ -40,8 +24,8 @@ export default function GalleryPage() {
   const [selectedImage, setSelectedImage] = useState<number | null>(null)
 
   const filtered = activeCategory === "All"
-    ? galleryItems
-    : galleryItems.filter((item) => item.category === activeCategory)
+    ? images.gallery
+    : images.gallery.filter((item) => item.category === activeCategory)
 
   const openLightbox = (id: number) => setSelectedImage(id)
   const closeLightbox = () => setSelectedImage(null)
@@ -119,17 +103,14 @@ export default function GalleryPage() {
                   className="group relative mb-5 cursor-pointer overflow-hidden rounded-2xl"
                   onClick={() => openLightbox(item.id)}
                 >
-                  <div
-                    className={`relative aspect-[3/4] w-full bg-gradient-to-br ${item.gradient}`}
-                  >
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="text-center">
-                        <div className="mx-auto mb-3 flex h-16 w-16 items-center justify-center rounded-full bg-white/10 backdrop-blur-sm">
-                          <Maximize2 className="h-6 w-6 text-[#D6B787]" />
-                        </div>
-                        <p className="font-serif text-lg text-[#F6F0EA]">{item.title}</p>
-                      </div>
-                    </div>
+                  <div className="relative aspect-[3/4] w-full bg-[#2B1C15]">
+                    <Image
+                      src={item.url}
+                      alt={item.title}
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#241710]/90 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                     <div className="absolute bottom-0 left-0 right-0 translate-y-4 p-5 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
                       <Badge className="border-[#D6B787] bg-[#241710]/80 text-xs uppercase tracking-wider text-[#D6B787]">
@@ -139,9 +120,6 @@ export default function GalleryPage() {
                     </div>
                   </div>
                   <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/0 transition-all duration-500 group-hover:ring-[#D6B787]/30" />
-                  <div className="absolute inset-0 scale-105 opacity-0 transition-all duration-700 group-hover:scale-100 group-hover:opacity-100">
-                    <div className="h-full w-full rounded-2xl bg-[#D6B787]/5" />
-                  </div>
                 </motion.div>
               ))}
             </AnimatePresence>
@@ -170,24 +148,17 @@ export default function GalleryPage() {
               onClick={(e) => e.stopPropagation()}
             >
               {(() => {
-                const item = galleryItems.find((i) => i.id === selectedImage)
+                const item = images.gallery.find((i) => i.id === selectedImage)
                 if (!item) return null
                 return (
-                  <div
-                    className={`flex aspect-[4/3] w-full items-center justify-center bg-gradient-to-br ${item.gradient} p-12`}
-                  >
-                    <div className="text-center">
-                      <div className="mx-auto mb-4 flex h-24 w-24 items-center justify-center rounded-full bg-white/10 backdrop-blur-sm">
-                        <Maximize2 className="h-10 w-10 text-[#D6B787]" />
-                      </div>
-                      <h3 className="font-serif text-3xl text-[#F6F0EA]">{item.title}</h3>
-                      <Badge className="mt-4 border-[#D6B787] bg-transparent px-4 py-1.5 text-xs uppercase tracking-wider text-[#D6B787]">
-                        {item.category}
-                      </Badge>
-                      <p className="mt-4 text-[#8E7C6E]">
-                        Experience the KO CLINIC difference — luxury, precision, artistry.
-                      </p>
-                    </div>
+                  <div className="relative aspect-[4/3] w-full bg-[#2B1C15]">
+                    <Image
+                      src={item.url}
+                      alt={item.title}
+                      fill
+                      className="object-contain"
+                      sizes="(max-width: 1200px) 100vw, 1200px"
+                    />
                   </div>
                 )
               })()}

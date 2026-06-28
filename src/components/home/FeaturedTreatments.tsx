@@ -3,12 +3,14 @@
 import { useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import { images } from "@/lib/images";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -18,42 +20,42 @@ const treatments = [
     category: "Hair Restoration",
     description: "Advanced follicular unit extraction for permanent, natural-looking hair restoration with minimal downtime.",
     slug: "micro-bio-fue",
-    gradient: "from-[#C5A067] via-[#D6B787] to-[#B78B5E]",
+    image: images.treatments.microBioFue,
   },
   {
     title: "DHI Hair Transplant",
     category: "Hair Restoration",
     description: "Direct hair implantation technique providing maximum density and natural results with rapid recovery.",
     slug: "dhi-hair-transplant",
-    gradient: "from-[#3A281E] to-[#2B1C15]",
+    image: images.treatments.dhi,
   },
   {
     title: "PRP Therapy",
     category: "Regenerative",
     description: "Platelet-rich plasma therapy to stimulate hair growth, collagen production, and cellular regeneration.",
     slug: "prp-therapy",
-    gradient: "from-[#B78B5E] via-[#C5A067] to-[#D6B787]",
+    image: images.treatments.prp,
   },
   {
     title: "Morpheus MNRF",
     category: "Skin",
     description: "Microneedling with radiofrequency for deep collagen remodeling, skin tightening, and scar revision.",
     slug: "morpheus-mnrf",
-    gradient: "from-[#2B1C15] to-[#3A281E]",
+    image: images.treatments.morpheus,
   },
   {
     title: "Botox",
     category: "Injectables",
     description: "Premium neurotoxin treatments for wrinkle reduction, brow lifting, and facial rejuvenation.",
     slug: "botox",
-    gradient: "from-[#D6B787] via-[#C5A067] to-[#B78B5E]",
+    image: images.treatments.botox,
   },
   {
     title: "PDO Thread Lift",
     category: "Skin",
     description: "Non-surgical lifting and tightening using absorbable threads for immediate, natural-looking results.",
     slug: "pdo-thread-lift",
-    gradient: "from-[#3A281E] to-[#1a0f0a]",
+    image: images.treatments.pdoThread,
   },
 ];
 
@@ -93,9 +95,15 @@ export function FeaturedTreatments() {
               ref={(el) => { cardsRef.current[i] = el; }}
               className="group relative overflow-hidden rounded-2xl aspect-[4/3] sm:aspect-[4/3] lg:aspect-[4/3] cursor-pointer"
             >
-              <div className={`absolute inset-0 bg-gradient-to-br ${treatment.gradient} opacity-90`} />
-              <div className="absolute inset-0 bg-gradient-to-t from-[rgba(36,23,16,0.6)] via-transparent to-[rgba(36,23,16,0.2)]" />
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-[rgba(214,183,135,0.04)]" />
+              <Image
+                src={treatment.image}
+                alt={treatment.title}
+                fill
+                className="object-cover transition-transform duration-700 group-hover:scale-110"
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[rgba(36,23,16,0.85)] via-[rgba(36,23,16,0.3)] to-[rgba(36,23,16,0.15)]" />
+              <div className="absolute inset-0 bg-[rgba(214,183,135,0.08)] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <Link href={`/treatments/${treatment.slug}`} className="relative h-full w-full flex flex-col justify-end p-4 sm:p-5 md:p-7">
                 <Badge variant="gold" className="w-fit mb-2 sm:mb-3 text-[8px] sm:text-[9px] px-1.5 sm:px-2 py-0.5 uppercase tracking-[0.15em]">
                   {treatment.category}

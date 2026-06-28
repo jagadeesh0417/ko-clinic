@@ -2,97 +2,27 @@
 
 import { useState, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { MoveHorizontal, Maximize2, X } from "lucide-react";
 import { SectionHeading } from "@/components/ui/section-heading";
+import { images } from "@/lib/images";
 
 const categories = ["All", "Hair", "Skin", "Botox", "Fillers", "Threads", "Laser", "Body"];
 
 const treatments = [
-  {
-    id: 1,
-    title: "Hair Transformation",
-    category: "Hair",
-    patient: "Male, 34 yrs",
-    date: "Dec 2024",
-    description: "Advanced FUE hair transplant restoring full density",
-    beforeGradient: "from-[#241710] to-[#3A281E]",
-    afterGradient: "from-[#C5A067] to-[#D6B787]",
-  },
-  {
-    id: 2,
-    title: "Skin Glow",
-    category: "Skin",
-    patient: "Female, 28 yrs",
-    date: "Jan 2025",
-    description: "Morpheus MNRF resurfacing for radiant complexion",
-    beforeGradient: "from-[#2B1C15] to-[#241710]",
-    afterGradient: "from-[#B78B5E] to-[#D6B787]",
-  },
-  {
-    id: 3,
-    title: "Wrinkle Reduction",
-    category: "Botox",
-    patient: "Female, 42 yrs",
-    date: "Feb 2025",
-    description: "Precision Botox for forehead & crow's feet",
-    beforeGradient: "from-[#3A281E] to-[#2B1C15]",
-    afterGradient: "from-[#D6B787] to-[#C5A067]",
-  },
-  {
-    id: 4,
-    title: "Volume Restoration",
-    category: "Fillers",
-    patient: "Female, 36 yrs",
-    date: "Mar 2025",
-    description: "Dermal filler volumisation for midface & lips",
-    beforeGradient: "from-[#241710] to-[#3A281E]",
-    afterGradient: "from-[#C5A067] to-[#B78B5E]",
-  },
-  {
-    id: 5,
-    title: "Body Sculpting",
-    category: "Body",
-    patient: "Male, 29 yrs",
-    date: "Nov 2024",
-    description: "CoolSculpting fat reduction for abdomen & flanks",
-    beforeGradient: "from-[#2B1C15] to-[#241710]",
-    afterGradient: "from-[#D6B787] to-[#C5A067]",
-  },
-  {
-    id: 6,
-    title: "Laser Rejuvenation",
-    category: "Laser",
-    patient: "Female, 45 yrs",
-    date: "Oct 2024",
-    description: "CO\u2082 fractional laser for pigmentation & texture",
-    beforeGradient: "from-[#3A281E] to-[#2B1C15]",
-    afterGradient: "from-[#B78B5E] to-[#D6B787]",
-  },
-  {
-    id: 7,
-    title: "Thread Lift",
-    category: "Threads",
-    patient: "Female, 39 yrs",
-    date: "Jan 2025",
-    description: "PDO thread lift for jowls & brow elevation",
-    beforeGradient: "from-[#241710] to-[#3A281E]",
-    afterGradient: "from-[#C5A067] to-[#D6B787]",
-  },
-  {
-    id: 8,
-    title: "Lip Enhancement",
-    category: "Fillers",
-    patient: "Female, 31 yrs",
-    date: "Feb 2025",
-    description: "Hyaluronic acid lip fillers for natural volume",
-    beforeGradient: "from-[#2B1C15] to-[#241710]",
-    afterGradient: "from-[#D6B787] to-[#C5A067]",
-  },
+  { id: 1, title: "Hair Transformation", category: "Hair", patient: "Male, 34 yrs", date: "Dec 2024", description: "Advanced FUE hair transplant restoring full density", img: images.beforeAfterPage[0] },
+  { id: 2, title: "Skin Glow", category: "Skin", patient: "Female, 28 yrs", date: "Jan 2025", description: "Morpheus MNRF resurfacing for radiant complexion", img: images.beforeAfterPage[1] },
+  { id: 3, title: "Wrinkle Reduction", category: "Botox", patient: "Female, 42 yrs", date: "Feb 2025", description: "Precision Botox for forehead & crow's feet", img: images.beforeAfterPage[2] },
+  { id: 4, title: "Volume Restoration", category: "Fillers", patient: "Female, 36 yrs", date: "Mar 2025", description: "Dermal filler volumisation for midface & lips", img: images.beforeAfterPage[3] },
+  { id: 5, title: "Body Sculpting", category: "Body", patient: "Male, 29 yrs", date: "Nov 2024", description: "CoolSculpting fat reduction for abdomen & flanks", img: images.beforeAfterPage[4] },
+  { id: 6, title: "Laser Rejuvenation", category: "Laser", patient: "Female, 45 yrs", date: "Oct 2024", description: "CO\u2082 fractional laser for pigmentation & texture", img: images.beforeAfterPage[5] },
+  { id: 7, title: "Thread Lift", category: "Threads", patient: "Female, 39 yrs", date: "Jan 2025", description: "PDO thread lift for jowls & brow elevation", img: images.beforeAfterPage[6] },
+  { id: 8, title: "Lip Enhancement", category: "Fillers", patient: "Female, 31 yrs", date: "Feb 2025", description: "Hyaluronic acid lip fillers for natural volume", img: images.beforeAfterPage[7] },
 ];
 
-function ComparisonSlider({ beforeGradient, afterGradient }: { beforeGradient: string; afterGradient: string }) {
+function ComparisonSlider({ before, after }: { before: string; after: string }) {
   const [position, setPosition] = useState(50);
   const containerRef = useRef<HTMLDivElement>(null);
   const dragging = useRef(false);
@@ -109,7 +39,6 @@ function ComparisonSlider({ beforeGradient, afterGradient }: { beforeGradient: s
     e.preventDefault();
     dragging.current = true;
     updatePosition(e.clientX);
-
     const onMove = (e: MouseEvent) => {
       if (!dragging.current) return;
       updatePosition(e.clientX);
@@ -146,11 +75,10 @@ function ComparisonSlider({ beforeGradient, afterGradient }: { beforeGradient: s
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
     >
-      <div className={`absolute inset-0 bg-gradient-to-br ${beforeGradient}`} />
-      <div
-        className={`absolute inset-0 bg-gradient-to-br ${afterGradient}`}
-        style={{ clipPath: `inset(0 ${100 - position}% 0 0)` }}
-      />
+      <Image src={before} alt="Before" fill className="object-cover pointer-events-none" sizes="(max-width: 768px) 100vw, 50vw" />
+      <div className="absolute inset-0" style={{ clipPath: `inset(0 ${100 - position}% 0 0)` }}>
+        <Image src={after} alt="After" fill className="object-cover pointer-events-none" sizes="(max-width: 768px) 100vw, 50vw" />
+      </div>
       <div className="absolute top-3 left-3 z-10">
         <span className="text-[10px] font-button uppercase tracking-wider px-2 py-1 rounded-full bg-black/50 text-white/80">Before</span>
       </div>
@@ -229,10 +157,7 @@ export default function BeforeAfterPage() {
                     className="relative aspect-[4/5] w-full"
                     onClick={() => setLightbox(item.id)}
                   >
-                    <ComparisonSlider
-                      beforeGradient={item.beforeGradient}
-                      afterGradient={item.afterGradient}
-                    />
+                    <ComparisonSlider before={item.img.before} after={item.img.after} />
                     <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center z-30">
                       <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
                         <Maximize2 className="w-5 h-5 text-white" />
@@ -281,10 +206,7 @@ export default function BeforeAfterPage() {
               <X className="w-5 h-5 text-white" />
             </button>
             <div className="aspect-[4/3] w-full">
-              <ComparisonSlider
-                beforeGradient={activeItem.beforeGradient}
-                afterGradient={activeItem.afterGradient}
-              />
+              <ComparisonSlider before={activeItem.img.before} after={activeItem.img.after} />
             </div>
             <div className="p-6">
               <div className="flex items-center justify-between mb-2">

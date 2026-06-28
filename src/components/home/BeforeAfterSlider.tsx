@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
+import { images } from "@/lib/images";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -18,22 +19,22 @@ const comparisons = [
     title: "Hair Transformation",
     category: "Hair",
     description: "Micro Bio-FUE Hair Transplant — 12 months post-op",
-    beforeColor: "#2B1C15",
-    afterColor: "#D6B787",
+    before: images.beforeAfter.hair.before,
+    after: images.beforeAfter.hair.after,
   },
   {
     title: "Skin Rejuvenation",
     category: "Skin",
     description: "Laser & PRP Therapy — 6 months post-op",
-    beforeColor: "#2B1C15",
-    afterColor: "#F6F0EA",
+    before: images.beforeAfter.skin.before,
+    after: images.beforeAfter.skin.after,
   },
   {
     title: "Facial Harmony",
     category: "Botox",
     description: "Botox & Fillers — 4 months post-op",
-    beforeColor: "#2B1C15",
-    afterColor: "#D6B787",
+    before: images.beforeAfter.facial.before,
+    after: images.beforeAfter.facial.after,
   },
 ];
 
@@ -92,14 +93,14 @@ export function BeforeAfterSlider() {
                 <ReactCompareSlider
                   itemOne={
                     <ReactCompareSliderImage
-                      src={`https://placehold.co/800x600/${item.beforeColor.replace("#", "")}/8E7C6E?text=Before&font=montserrat`}
+                      src={item.before}
                       alt="Before"
                       style={{ width: "100%", height: "100%", objectFit: "cover" }}
                     />
                   }
                   itemTwo={
                     <ReactCompareSliderImage
-                      src={`https://placehold.co/800x600/${item.afterColor.replace("#", "")}/241710?text=After&font=montserrat`}
+                      src={item.after}
                       alt="After"
                       style={{ width: "100%", height: "100%", objectFit: "cover" }}
                     />

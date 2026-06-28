@@ -1,48 +1,20 @@
 "use client"
 
 import { motion } from "framer-motion"
+import Image from "next/image"
 import { SectionHeading } from "@/components/ui/section-heading"
 import { Button } from "@/components/ui/button"
 import { Camera, ArrowRight } from "lucide-react"
 import Link from "next/link"
+import { images } from "@/lib/images"
 
-const images = [
-  {
-    src: "/images/clinic/clinic-1.jpg",
-    alt: "Luxury treatment room",
-    label: "Treatment Suites",
-    aspect: "aspect-[4/5]",
-  },
-  {
-    src: "/images/clinic/clinic-2.jpg",
-    alt: "Reception area",
-    label: "Reception Lounge",
-    aspect: "aspect-[3/4]",
-  },
-  {
-    src: "/images/clinic/clinic-3.jpg",
-    alt: "Procedure room with advanced equipment",
-    label: "Advanced Technology",
-    aspect: "aspect-[4/3]",
-  },
-  {
-    src: "/images/clinic/clinic-4.jpg",
-    alt: "Relaxation space",
-    label: "Relaxation Suite",
-    aspect: "aspect-[3/4]",
-  },
-  {
-    src: "/images/clinic/clinic-5.jpg",
-    alt: "Consultation room",
-    label: "Private Consultation",
-    aspect: "aspect-[4/5]",
-  },
-  {
-    src: "/images/clinic/clinic-6.jpg",
-    alt: "Clinic hallway",
-    label: "Elegant Corridors",
-    aspect: "aspect-[16/9]",
-  },
+const galleryItems = [
+  { alt: "Luxury treatment room", label: "Treatment Suites", aspect: "aspect-[4/5]" },
+  { alt: "Reception area", label: "Reception Lounge", aspect: "aspect-[3/4]" },
+  { alt: "Procedure room with advanced equipment", label: "Advanced Technology", aspect: "aspect-[4/3]" },
+  { alt: "Relaxation space", label: "Relaxation Suite", aspect: "aspect-[3/4]" },
+  { alt: "Consultation room", label: "Private Consultation", aspect: "aspect-[4/5]" },
+  { alt: "Clinic environment", label: "Elegant Spaces", aspect: "aspect-[16/9]" },
 ]
 
 const containerVariants = {
@@ -78,18 +50,21 @@ export function ClinicExperience() {
           viewport={{ once: true, margin: "-100px" }}
           className="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4 mt-12"
         >
-          {images.map((image, index) => (
+          {galleryItems.map((item, index) => (
             <motion.div
               key={index}
               variants={itemVariants}
               className="break-inside-avoid overflow-hidden rounded-lg relative group cursor-pointer"
             >
               <div
-                className={`${image.aspect} bg-[#2B1C15] relative overflow-hidden`}
+                className={`${item.aspect} bg-[#2B1C15] relative overflow-hidden`}
               >
-                <div
-                  className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-110"
-                  style={{ backgroundImage: `url(${image.src})` }}
+                <Image
+                  src={images.clinic[index]}
+                  alt={item.alt}
+                  fill
+                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+                  sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#241710]/90 via-[#241710]/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500" />
                 <div className="absolute inset-0 bg-[rgba(214,183,135,0.25)] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -98,7 +73,7 @@ export function ClinicExperience() {
                     <div className="flex items-center gap-2 mb-1">
                       <Camera className="w-4 h-4 text-[#D6B787]" />
                       <span className="text-[#D6B787] text-sm font-medium tracking-wide uppercase">
-                        {image.label}
+                        {item.label}
                       </span>
                     </div>
                     <div className="w-0 h-[1px] bg-[#C5A067] group-hover:w-full transition-all duration-500 delay-100" />

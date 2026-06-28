@@ -1,17 +1,19 @@
 "use client"
 
 import { motion } from "framer-motion"
+import Image from "next/image"
 import { SectionHeading } from "@/components/ui/section-heading"
 import { GlassCard } from "@/components/ui/glass-card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Award, GraduationCap } from "lucide-react"
 import Link from "next/link"
+import { images } from "@/lib/images"
 
 const doctors = [
   {
     name: "Dr. Vikas Singh",
-    initials: "VS",
+    image: images.doctors.vikas,
     title: "Founder & CEO",
     tagline: "Pioneer in Hair Restoration",
     specializations: ["Hair Transplant", "Cosmetic Dermatology"],
@@ -20,7 +22,7 @@ const doctors = [
   },
   {
     name: "Dr. Priya Sharma",
-    initials: "PS",
+    image: images.doctors.priya,
     title: "Senior Dermatologist",
     tagline: "Skin Rejuvenation Expert",
     specializations: ["Skin Rejuvenation", "Laser Therapy"],
@@ -29,7 +31,7 @@ const doctors = [
   },
   {
     name: "Dr. Arjun Mehta",
-    initials: "AM",
+    image: images.doctors.arjun,
     title: "Hair Restoration Specialist",
     tagline: "Artistry in Hair Transplantation",
     specializations: ["FUE", "DHI", "PRP"],
@@ -46,11 +48,6 @@ const containerVariants = {
 const itemVariants = {
   hidden: { opacity: 0, y: 40 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" as const } },
-}
-
-function getInitialsColor(initials: string) {
-  const colors = ["from-[#D6B787] to-[#C5A067]", "from-[#C5A067] to-[#B78B5E]", "from-[#B78B5E] to-[#D6B787]"]
-  return colors[initials.length % colors.length]
 }
 
 export function DoctorSection() {
@@ -73,10 +70,14 @@ export function DoctorSection() {
                 style={{ background: "linear-gradient(135deg, rgba(58,40,30,0.9), rgba(43,28,21,0.95))" }}
               >
                 <div className="relative overflow-hidden bg-[#2B1C15]">
-                  <div className="flex h-48 sm:h-56 items-center justify-center bg-[#3A281E]">
-                    <div className={`flex h-24 w-24 sm:h-28 sm:w-28 items-center justify-center rounded-full bg-gradient-to-br ${getInitialsColor(doctor.initials)} shadow-2xl ring-4 ring-[rgba(214,183,135,0.3)] transition-transform duration-500 group-hover:scale-110`}>
-                      <span className="text-2xl sm:text-3xl font-bold tracking-wide text-[#241710]">{doctor.initials}</span>
-                    </div>
+                  <div className="relative h-48 sm:h-56 w-full">
+                    <Image
+                      src={doctor.image}
+                      alt={doctor.name}
+                      fill
+                      className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    />
                   </div>
                   <div className="absolute inset-x-0 bottom-0 h-16 sm:h-20 bg-gradient-to-t from-[rgba(43,28,21,1)] to-transparent" />
                 </div>

@@ -2,9 +2,11 @@
 
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Play, Clock, ArrowRight } from "lucide-react"
+import { images } from "@/lib/images"
 
 const categories = [
   { id: "all", label: "All" },
@@ -16,68 +18,20 @@ const categories = [
 ]
 
 const videos = [
-  {
-    id: 1,
-    title: "Hair Transplant Overview",
-    category: "hair",
-    duration: "4:32",
-    description:
-      "A comprehensive look at the modern hair transplant procedure, from consultation to recovery.",
-    featured: true,
-  },
-  {
-    id: 2,
-    title: "PRP Therapy Explained",
-    category: "skin",
-    duration: "3:15",
-    description:
-      "Understanding Platelet-Rich Plasma therapy and its remarkable benefits for skin rejuvenation.",
-    featured: false,
-  },
-  {
-    id: 3,
-    title: "Botox Treatment Session",
-    category: "injectables",
-    duration: "5:20",
-    description:
-      "Follow along a complete Botox treatment session with detailed explanations of each step.",
-    featured: false,
-  },
-  {
-    id: 4,
-    title: "Patient Success Story",
-    category: "stories",
-    duration: "6:45",
-    description:
-      "A heartfelt journey of transformation as a patient shares their experience at KO Clinic.",
-    featured: false,
-  },
-  {
-    id: 5,
-    title: "Laser Rejuvenation",
-    category: "skin",
-    duration: "4:10",
-    description:
-      "Discover how advanced laser technology can restore youth and vitality to your skin.",
-    featured: false,
-  },
-  {
-    id: 6,
-    title: "Dr. Vikas Interview",
-    category: "stories",
-    duration: "8:30",
-    description:
-      "An exclusive interview with Dr. Vikas on the philosophy and vision behind KO Clinic.",
-    featured: false,
-  },
+  { id: 1, title: "Hair Transplant Overview", category: "hair", duration: "4:32", description: "A comprehensive look at the modern hair transplant procedure, from consultation to recovery.", featured: true, thumbnail: images.videos[0] },
+  { id: 2, title: "PRP Therapy Explained", category: "skin", duration: "3:15", description: "Understanding Platelet-Rich Plasma therapy and its remarkable benefits for skin rejuvenation.", featured: false, thumbnail: images.videos[1] },
+  { id: 3, title: "Botox Treatment Session", category: "injectables", duration: "5:20", description: "Follow along a complete Botox treatment session with detailed explanations of each step.", featured: false, thumbnail: images.videos[2] },
+  { id: 4, title: "Patient Success Story", category: "stories", duration: "6:45", description: "A heartfelt journey of transformation as a patient shares their experience at KO Clinic.", featured: false, thumbnail: images.videos[3] },
+  { id: 5, title: "Laser Rejuvenation", category: "skin", duration: "4:10", description: "Discover how advanced laser technology can restore youth and vitality to your skin.", featured: false, thumbnail: images.videos[4] },
+  { id: 6, title: "Dr. Vikas Interview", category: "stories", duration: "8:30", description: "An exclusive interview with Dr. Vikas on the philosophy and vision behind KO Clinic.", featured: false, thumbnail: images.videos[5] },
 ]
 
-const categoryGradients: Record<string, string> = {
-  hair: "from-amber-900/60 to-amber-700/30",
-  skin: "from-rose-900/60 to-rose-700/30",
-  injectables: "from-violet-900/60 to-violet-700/30",
-  stories: "from-emerald-900/60 to-emerald-700/30",
-  tour: "from-sky-900/60 to-sky-700/30",
+const categoryLabels: Record<string, string> = {
+  hair: "Hair Procedures",
+  skin: "Skin Treatments",
+  injectables: "Injectables",
+  stories: "Patient Stories",
+  tour: "Clinic Tour",
 }
 
 const categoryColors: Record<string, string> = {
@@ -86,14 +40,6 @@ const categoryColors: Record<string, string> = {
   injectables: "bg-violet-800/80 text-violet-100 border-violet-700",
   stories: "bg-emerald-800/80 text-emerald-100 border-emerald-700",
   tour: "bg-sky-800/80 text-sky-100 border-sky-700",
-}
-
-const categoryLabels: Record<string, string> = {
-  hair: "Hair Procedures",
-  skin: "Skin Treatments",
-  injectables: "Injectables",
-  stories: "Patient Stories",
-  tour: "Clinic Tour",
 }
 
 export default function MediaPage() {
@@ -171,13 +117,14 @@ export default function MediaPage() {
                   className="group relative mb-10 overflow-hidden rounded-2xl"
                 >
                   <div className="relative aspect-video w-full overflow-hidden rounded-2xl sm:aspect-[21/9]">
-                    <div
-                      className={`absolute inset-0 bg-gradient-to-br ${
-                        categoryGradients[featured.category] || "from-[#3A281E] to-[#2B1C15]"
-                      }`}
+                    <Image
+                      src={featured.thumbnail}
+                      alt={featured.title}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      sizes="100vw"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#241710]/90 via-transparent to-transparent" />
-                    <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNGRkZGRkYiIGZpbGwtb3BhY2l0eT0iMC4wMyI+PHBhdGggZD0iTTM2IDM0djItSDI0di0yaDEyek0zNiAyNHYySDI0di0yaDEyeiIvPjwvZz48L2c+PC9zdmc+')] opacity-40" />
                     <motion.div
                       whileHover={{ scale: 1.05 }}
                       transition={{ duration: 0.4, ease: "easeOut" }}
@@ -187,12 +134,8 @@ export default function MediaPage() {
                         <Play className="ml-1 h-8 w-8 sm:h-10 sm:w-10" fill="currentColor" />
                       </div>
                     </motion.div>
-                    <div className="absolute left-6 right-6 bottom-6 sm:left-10 sm:bottom-10">
-                      <Badge
-                        className={`mb-3 border px-3 py-1 text-xs font-medium ${
-                          categoryColors[featured.category]
-                        }`}
-                      >
+                    <div className="absolute left-6 right-6 bottom-6 sm:left-10 sm:bottom-10 z-10">
+                      <Badge className={`mb-3 border px-3 py-1 text-xs font-medium ${categoryColors[featured.category]}`}>
                         {categoryLabels[featured.category]}
                       </Badge>
                       <h3 className="font-serif text-2xl font-light text-[#F6F0EA] sm:text-3xl lg:text-4xl">
@@ -218,21 +161,18 @@ export default function MediaPage() {
                       layout
                       initial={{ opacity: 0, y: 30 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{
-                        duration: 0.5,
-                        delay: index * 0.1,
-                        ease: "easeOut",
-                      }}
+                      transition={{ duration: 0.5, delay: index * 0.1, ease: "easeOut" }}
                       className="group relative overflow-hidden rounded-xl"
                     >
                       <div className="relative aspect-video w-full overflow-hidden rounded-xl">
-                        <div
-                          className={`absolute inset-0 bg-gradient-to-br ${
-                            categoryGradients[video.category] || "from-[#3A281E] to-[#2B1C15]"
-                          } transition-transform duration-500 group-hover:scale-110`}
+                        <Image
+                          src={video.thumbnail}
+                          alt={video.title}
+                          fill
+                          className="object-cover transition-transform duration-500 group-hover:scale-110"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-[#241710]/90 via-transparent to-transparent" />
-                        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNGRkZGRkYiIGZpbGwtb3BhY2l0eT0iMC4wMyI+PHBhdGggZD0iTTM2IDM0djItSDI0di0yaDEyek0zNiAyNHYySDI0di0yaDEyeiIvPz48L2c+PC9zdmc+')] opacity-40" />
                         <motion.div
                           whileHover={{ scale: 1.08 }}
                           transition={{ duration: 0.3, ease: "easeOut" }}
@@ -242,12 +182,8 @@ export default function MediaPage() {
                             <Play className="ml-0.5 h-6 w-6" fill="currentColor" />
                           </div>
                         </motion.div>
-                        <div className="absolute right-3 top-3">
-                          <Badge
-                            className={`border px-2.5 py-0.5 text-[11px] font-medium ${
-                              categoryColors[video.category]
-                            }`}
-                          >
+                        <div className="absolute right-3 top-3 z-10">
+                          <Badge className={`border px-2.5 py-0.5 text-[11px] font-medium ${categoryColors[video.category]}`}>
                             {categoryLabels[video.category]}
                           </Badge>
                         </div>
@@ -276,7 +212,7 @@ export default function MediaPage() {
                     className="mt-4 border-[#D6B787]/30 text-[#D6B787] hover:bg-[#D6B787]/10"
                   >
                     View All Videos
-                    <ArrowRight className="ml-2 h-4 w-4" />
+                    <ArrowRight className="ml-2 h-4 h-4" />
                   </Button>
                 </div>
               )}

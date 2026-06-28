@@ -2,6 +2,7 @@
 
 import { useRef, useEffect } from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import dynamic from "next/dynamic";
@@ -10,18 +11,19 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Play, ArrowRight } from "lucide-react";
 import Link from "next/link";
+import { images } from "@/lib/images";
 
 const ReactPlayer = dynamic(() => import("react-player"), { ssr: false });
 
 gsap.registerPlugin(ScrollTrigger);
 
 const videos = [
-  { title: "Laser Skin Resurfacing: What to Expect", category: "Treatments", duration: "4:32", gradient: "from-[#D6B787] to-[#B78B5E]" },
-  { title: "Our State-of-the-Art Facility Tour", category: "Clinic Tour", duration: "3:15", gradient: "from-[#C5A067] to-[#8E7C6E]" },
-  { title: "Patient Journey: Before & After Results", category: "Testimonials", duration: "5:48", gradient: "from-[#D6B787] to-[#C5A067]" },
-  { title: "Advanced Injectable Techniques Explained", category: "Procedures", duration: "6:10", gradient: "from-[#B78B5E] to-[#8E7C6E]" },
-  { title: "Skincare Routine Tips from Our Experts", category: "Skincare", duration: "3:55", gradient: "from-[#C5A067] to-[#B78B5E]" },
-  { title: "Meet the KO Clinic Medical Team", category: "About Us", duration: "4:05", gradient: "from-[#D6B787] to-[#8E7C6E]" },
+  { title: "Laser Skin Resurfacing: What to Expect", category: "Treatments", duration: "4:32" },
+  { title: "Our State-of-the-Art Facility Tour", category: "Clinic Tour", duration: "3:15" },
+  { title: "Patient Journey: Before & After Results", category: "Testimonials", duration: "5:48" },
+  { title: "Advanced Injectable Techniques Explained", category: "Procedures", duration: "6:10" },
+  { title: "Skincare Routine Tips from Our Experts", category: "Skincare", duration: "3:55" },
+  { title: "Meet the KO Clinic Medical Team", category: "About Us", duration: "4:05" },
 ];
 
 export function VideoLibrary() {
@@ -49,9 +51,17 @@ export function VideoLibrary() {
           {videos.map((video, index) => (
             <div key={index} className="video-card group relative rounded-xl overflow-hidden cursor-pointer">
               <div className="relative w-full aspect-video bg-[#2B1C15] flex items-center justify-center overflow-hidden">
+                <Image
+                  src={images.videos[index]}
+                  alt={video.title}
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                />
+                <div className="absolute inset-0 bg-[rgba(36,23,16,0.4)]" />
                 <ReactPlayer
                   src={`https://www.youtube.com/watch?v=dQw4w9WgXcQ`}
-                  light
+                  light={false}
                   width="100%"
                   height="100%"
                   playIcon={

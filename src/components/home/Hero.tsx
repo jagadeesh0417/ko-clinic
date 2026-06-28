@@ -3,9 +3,11 @@
 import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { AnimatedCounter } from "@/components/ui/animated-counter";
 import { MessageCircle, Play, Shield, Sparkles, Award, Globe, Clock, HeartHandshake } from "lucide-react";
+import { images } from "@/lib/images";
 
 const stats = [
   { end: 20, suffix: "+", label: "Years Experience" },
@@ -26,28 +28,18 @@ const badges = [
 const headlineWords = ["Best", "Hair,", "Skin", "&", "Aesthetic", "Treatments"];
 
 export function Hero() {
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.play().catch(() => {});
-    }
-  }, []);
-
   return (
     <section className="relative h-svh min-h-[600px] md:min-h-[800px] flex items-center justify-center overflow-hidden bg-[#241710]">
       <div className="absolute inset-0">
-        <video
-          ref={videoRef}
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="w-full h-full object-cover opacity-50 scale-105"
-          poster="/hero-poster.jpg"
-        >
-          <source src="/hero-video.mp4" type="video/mp4" />
-        </video>
+        <Image
+          src={images.hero.bg}
+          alt="KO CLINIC"
+          fill
+          className="object-cover opacity-50 scale-105"
+          priority
+          sizes="100vw"
+          quality={85}
+        />
         <div className="absolute inset-0 bg-gradient-to-br from-[rgba(36,23,16,0.75)] via-[rgba(58,40,30,0.5)] to-[rgba(43,28,21,0.9)]" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(214,183,135,0.08),transparent_70%)]" />
         <div className="absolute inset-0 bg-gradient-to-t from-[#241710] via-transparent to-[rgba(36,23,16,0.4)]" />

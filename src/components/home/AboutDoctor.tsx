@@ -1,10 +1,12 @@
 "use client"
 
 import { motion } from "framer-motion"
+import Image from "next/image"
 import { GlassCard } from "@/components/ui/glass-card"
 import { Button } from "@/components/ui/button"
 import { Award, Globe, Star, Users } from "lucide-react"
 import Link from "next/link"
+import { images } from "@/lib/images"
 
 const achievements = [
   { icon: Star, value: "20+", label: "Years Experience" },
@@ -28,17 +30,19 @@ export function AboutDoctor() {
             <div
               className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-2xl"
               style={{
-                background: "linear-gradient(135deg, #2B1C15 0%, #3A281E 50%, #1A0F0A 100%)",
                 border: "2px solid rgba(214,183,135,0.25)",
                 boxShadow: "0 0 60px rgba(214,183,135,0.08), inset 0 0 80px rgba(214,183,135,0.03)",
               }}
             >
-              <div className="absolute inset-0 rounded-2xl opacity-30"
-                style={{ background: "radial-gradient(circle at 30% 40%, rgba(214,183,135,0.15) 0%, transparent 60%), radial-gradient(circle at 70% 80%, rgba(197,160,103,0.1) 0%, transparent 50%)" }}
+              <Image
+                src={images.aboutDoctor.vikas}
+                alt="Dr. Vikas Singh"
+                fill
+                className="object-cover object-top"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                priority
               />
-              <span className="select-none font-heading font-light tracking-[0.3em] text-[clamp(4rem,12vw,7rem)] text-[#D6B787] opacity-60">
-                VS
-              </span>
+              <div className="absolute inset-0 bg-gradient-to-t from-[rgba(36,23,16,0.4)] to-transparent" />
             </div>
           </motion.div>
 

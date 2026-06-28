@@ -1,12 +1,14 @@
 "use client"
 
 import { motion } from "framer-motion"
+import Image from "next/image"
 import { SectionHeading } from "@/components/ui/section-heading"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Calendar, ArrowRight } from "lucide-react"
 import Link from "next/link"
 import { formatDate } from "@/lib/utils"
+import { images } from "@/lib/images"
 
 const blogPosts = [
   {
@@ -17,6 +19,7 @@ const blogPosts = [
     date: new Date("2026-05-15"),
     slug: "/blog/facial-rejuvenation",
     featured: true,
+    image: images.blog.featured,
   },
   {
     id: 2,
@@ -25,6 +28,7 @@ const blogPosts = [
     excerpt: "Expert guidance on curating a personalized skincare regimen using medical-grade products for visible, lasting results.",
     date: new Date("2026-04-28"),
     slug: "/blog/luxury-skincare-ritual",
+    image: images.blog.side1,
   },
   {
     id: 3,
@@ -33,6 +37,7 @@ const blogPosts = [
     excerpt: "Exploring how holistic wellness practices enhance aesthetic outcomes and promote enduring beauty from within.",
     date: new Date("2026-04-10"),
     slug: "/blog/inner-outer-radiance",
+    image: images.blog.side2,
   },
 ]
 
@@ -69,12 +74,16 @@ export function BlogSection() {
             <motion.div variants={itemVariants} className="lg:col-span-2">
               <Link
                 href={featured.slug}
-                className="group block relative h-full min-h-[320px] sm:min-h-[420px] lg:min-h-[520px] rounded-2xl overflow-hidden bg-[#3A281E] border border-[rgba(214,183,135,0.25)]"
+                className="group block relative h-full min-h-[320px] sm:min-h-[420px] lg:min-h-[520px] rounded-2xl overflow-hidden border border-[rgba(214,183,135,0.25)]"
               >
+                <Image
+                  src={featured.image}
+                  alt={featured.title}
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  sizes="(max-width: 1024px) 100vw, 66vw"
+                />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#241710] via-[#241710]/40 to-transparent z-10" />
-                <div className="absolute inset-0 bg-[#2B1C15]">
-                  <div className="w-full h-full bg-gradient-to-br from-[#3A281E] to-[#2B1C15] opacity-60" />
-                </div>
                 <div className="relative z-20 flex flex-col justify-end h-full p-5 sm:p-8 lg:p-10">
                   <Badge className="self-start mb-3 sm:mb-4 bg-[#D6B787]/15 text-[#D6B787] border border-[#D6B787]/30 text-[10px] sm:text-xs">
                     {featured.category}
@@ -99,8 +108,14 @@ export function BlogSection() {
                   href={post.slug}
                   className="group block rounded-2xl overflow-hidden bg-[#3A281E] border border-[rgba(214,183,135,0.25)] h-full"
                 >
-                  <div className="h-36 sm:h-44 lg:h-48 bg-[#2B1C15]">
-                    <div className="w-full h-full bg-gradient-to-br from-[#3A281E] to-[#2B1C15] opacity-60" />
+                  <div className="relative h-36 sm:h-44 lg:h-48">
+                    <Image
+                      src={post.image}
+                      alt={post.title}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      sizes="(max-width: 1024px) 100vw, 33vw"
+                    />
                   </div>
                   <div className="p-4 sm:p-5 lg:p-6">
                     <Badge className="mb-2 sm:mb-3 bg-[#D6B787]/15 text-[#D6B787] border border-[#D6B787]/30 text-[10px] sm:text-xs">

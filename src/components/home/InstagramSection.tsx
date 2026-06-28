@@ -1,20 +1,11 @@
 "use client"
 
 import { motion } from "framer-motion"
+import Image from "next/image"
 import { SectionHeading } from "@/components/ui/section-heading"
 import { Button } from "@/components/ui/button"
-import { Image, ArrowRight } from "lucide-react"
-
-const posts = [
-  { label: "Luxury facial glow", type: "Photo" },
-  { label: "BBL transformation", type: "Reel" },
-  { label: "VIP treatment room", type: "Photo" },
-  { label: "Client results", type: "Reel" },
-  { label: "Laser rejuvenation", type: "Photo" },
-  { label: "Behind the scenes", type: "Reel" },
-  { label: "Clinic tour", type: "Photo" },
-  { label: "Patient journey", type: "Reel" },
-]
+import { ArrowRight } from "lucide-react"
+import { images } from "@/lib/images"
 
 export function InstagramSection() {
   return (
@@ -27,7 +18,7 @@ export function InstagramSection() {
         />
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4 mt-10 sm:mt-12">
-          {posts.map((post, i) => (
+          {images.instagram.map((post, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 24 }}
@@ -35,16 +26,15 @@ export function InstagramSection() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.08 }}
               className="relative aspect-square rounded-xl overflow-hidden group cursor-pointer"
-              style={{
-                background: `linear-gradient(135deg, #2B1C15, #3A281E)`,
-              }}
             >
-              <div className="absolute inset-0 flex flex-col items-center justify-center text-[#D6B787] gap-2 p-3">
-                <Image className="w-6 h-6 sm:w-8 sm:h-8" />
-                <span className="text-[10px] sm:text-xs font-medium text-[#E8DDD1] text-center leading-tight line-clamp-2">
-                  {post.label}
-                </span>
-              </div>
+              <Image
+                src={post.url}
+                alt={post.label}
+                fill
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
+                sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, 25vw"
+              />
+              <div className="absolute inset-0 bg-[rgba(36,23,16,0.3)] group-hover:bg-[rgba(36,23,16,0.15)] transition-colors duration-300" />
 
               <div className="absolute top-2 right-2">
                 <span
@@ -81,7 +71,6 @@ export function InstagramSection() {
                 background: "linear-gradient(135deg, #f58529, #dd2a7b, #8134af)",
               }}
             >
-              <Image className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               Follow @koclinic
               <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </Button>

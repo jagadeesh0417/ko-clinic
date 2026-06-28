@@ -1,11 +1,14 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { GlassCard } from "@/components/ui/glass-card";
 import { Button } from "@/components/ui/button";
 import { Award, Globe, Star, Target, Eye, Quote } from "lucide-react";
 import Link from "next/link";
+import { images } from "@/lib/images";
+
 const stats = [
   { value: "20+", label: "Years Experience", icon: Award },
   { value: "3000+", label: "Successful Procedures", icon: Star },
@@ -63,10 +66,15 @@ export default function AboutPage() {
               transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
               className="relative"
             >
-              <div className="aspect-[3/4] rounded-2xl bg-gradient-to-br from-[rgba(214,183,135,0.12)] to-[#2B1C15] border border-[rgba(214,183,135,0.15)] flex items-center justify-center overflow-hidden">
-                <span className="font-heading text-7xl md:text-8xl lg:text-9xl font-light champagne-text opacity-80">
-                  VS
-                </span>
+              <div className="aspect-[3/4] rounded-2xl bg-[#2B1C15] border border-[rgba(214,183,135,0.15)] flex items-center justify-center overflow-hidden">
+                <Image
+                  src={images.aboutDoctor.vikas}
+                  alt="Dr. Vikas Singh"
+                  fill
+                  className="object-cover object-top"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  priority
+                />
               </div>
             </motion.div>
             <div className="space-y-6">
