@@ -88,7 +88,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`scroll-smooth ${cormorant.variable} ${playfair.variable} ${inter.variable} ${montserrat.variable}`}>
+    <html lang="en" className={`${cormorant.variable} ${playfair.variable} ${inter.variable} ${montserrat.variable}`}>
       <body className="min-h-screen bg-[#241710] text-[#F6F0EA] antialiased">
         <Preloader />
         <SmoothScroll>

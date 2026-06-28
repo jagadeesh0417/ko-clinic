@@ -62,24 +62,16 @@ export function BeforeAfterSlider() {
         ".ba-stat",
         { scale: 0.8, opacity: 0 },
         {
-          scale: 1, opacity: 1,
-          duration: 0.8,
-          stagger: 0.15,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: ".ba-stats-row",
-            start: "top 85%",
-            toggleActions: "play none none none",
-          },
+          scale: 1, opacity: 1, duration: 0.8, stagger: 0.15, ease: "power2.out",
+          scrollTrigger: { trigger: ".ba-stats-row", start: "top 85%", toggleActions: "play none none none" },
         }
       );
     }, sectionRef);
-
     return () => ctx.revert();
   }, []);
 
   return (
-    <section ref={sectionRef} className="section-padding bg-[#3A281E] overflow-hidden">
+    <section ref={sectionRef} className="section-padding bg-[#3A281E]">
       <div className="container-custom">
         <SectionHeading
           title="Real Transformations"
@@ -88,7 +80,7 @@ export function BeforeAfterSlider() {
         />
 
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6 mt-10 sm:mt-12"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
@@ -96,7 +88,7 @@ export function BeforeAfterSlider() {
         >
           {comparisons.map((item, i) => (
             <motion.div key={i} variants={cardVariants} className="rounded-2xl overflow-hidden bg-[#241710] group">
-              <div className="relative h-[400px] overflow-hidden">
+              <div className="relative h-[300px] sm:h-[350px] md:h-[400px] overflow-hidden">
                 <ReactCompareSlider
                   itemOne={
                     <ReactCompareSliderImage
@@ -116,38 +108,38 @@ export function BeforeAfterSlider() {
                   style={{ height: "100%", width: "100%" }}
                   className="[&>div]:!cursor-ew-resize"
                 />
-                <div className="absolute top-3 left-3 z-10">
-                  <span className="text-[10px] uppercase tracking-[0.2em] text-[#8E7C6E] bg-[rgba(36,23,16,0.7)] backdrop-blur-sm px-2.5 py-1 rounded-full">
+                <div className="absolute top-2 sm:top-3 left-2 sm:left-3 z-10">
+                  <span className="text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-[#8E7C6E] bg-[rgba(36,23,16,0.7)] backdrop-blur-sm px-2 sm:px-2.5 py-1 rounded-full">
                     Before
                   </span>
                 </div>
-                <div className="absolute top-3 right-3 z-10">
-                  <span className="text-[10px] uppercase tracking-[0.2em] text-[#D6B787] bg-[rgba(36,23,16,0.7)] backdrop-blur-sm px-2.5 py-1 rounded-full">
+                <div className="absolute top-2 sm:top-3 right-2 sm:right-3 z-10">
+                  <span className="text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-[#D6B787] bg-[rgba(36,23,16,0.7)] backdrop-blur-sm px-2 sm:px-2.5 py-1 rounded-full">
                     After
                   </span>
                 </div>
               </div>
-              <div className="p-5">
-                <div className="flex items-center justify-between mb-2">
-                  <h3 className="font-heading text-lg text-[#F6F0EA]">{item.title}</h3>
-                  <Badge variant="outline" className="border-[rgba(214,183,135,0.25)] text-[#D6B787] text-[10px]">
+              <div className="p-4 sm:p-5">
+                <div className="flex items-center justify-between mb-2 gap-2">
+                  <h3 className="font-heading text-sm sm:text-base md:text-lg text-[#F6F0EA]">{item.title}</h3>
+                  <Badge variant="outline" className="border-[rgba(214,183,135,0.25)] text-[#D6B787] text-[9px] sm:text-[10px] shrink-0">
                     {item.category}
                   </Badge>
                 </div>
-                <p className="text-[#8E7C6E] text-sm font-body">{item.description}</p>
+                <p className="text-[#8E7C6E] text-xs sm:text-sm font-body">{item.description}</p>
               </div>
             </motion.div>
           ))}
 
           <motion.div
             variants={cardVariants}
-            className="rounded-2xl flex flex-col items-center justify-center text-center p-8 min-h-[520px] bg-[#2B1C15] border border-[rgba(214,183,135,0.15)] hover:border-[rgba(214,183,135,0.3)] transition-colors duration-500"
+            className="rounded-2xl flex flex-col items-center justify-center text-center p-6 sm:p-8 min-h-[400px] sm:min-h-[520px] bg-[#2B1C15] border border-[rgba(214,183,135,0.15)] hover:border-[rgba(214,183,135,0.3)] transition-colors duration-500"
           >
-            <div className="w-16 h-16 rounded-full bg-[rgba(214,183,135,0.1)] flex items-center justify-center mb-5">
-              <ArrowRight className="w-6 h-6 text-[#D6B787]" />
+            <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-[rgba(214,183,135,0.1)] flex items-center justify-center mb-4 sm:mb-5">
+              <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 text-[#D6B787]" />
             </div>
-            <h3 className="font-heading text-xl text-[#F6F0EA] mb-2">See More Results</h3>
-            <p className="text-[#8E7C6E] text-sm mb-6 max-w-[220px] font-body">
+            <h3 className="font-heading text-lg sm:text-xl text-[#F6F0EA] mb-2">See More Results</h3>
+            <p className="text-[#8E7C6E] text-xs sm:text-sm mb-5 sm:mb-6 max-w-[220px] font-body">
               Explore our complete gallery of patient transformations
             </p>
             <Link href="/before-after">
@@ -158,7 +150,7 @@ export function BeforeAfterSlider() {
           </motion.div>
         </motion.div>
 
-        <div className="ba-stats-row grid grid-cols-2 md:grid-cols-4 gap-6 mt-20">
+        <div className="ba-stats-row grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 mt-14 sm:mt-20">
           {[
             { value: "5,000+", label: "Happy Patients" },
             { value: "15+", label: "Years Experience" },
@@ -166,14 +158,14 @@ export function BeforeAfterSlider() {
             { value: "98%", label: "Satisfaction Rate" },
           ].map((stat, i) => (
             <div key={i} className="ba-stat text-center">
-              <p className="font-heading text-3xl md:text-4xl text-[#D6B787] mb-1">{stat.value}</p>
-              <p className="text-[#8E7C6E] text-sm uppercase tracking-[0.15em] font-body">{stat.label}</p>
+              <p className="font-heading text-2xl sm:text-3xl md:text-4xl text-[#D6B787] mb-1">{stat.value}</p>
+              <p className="text-[#8E7C6E] text-xs sm:text-sm uppercase tracking-[0.15em] font-body">{stat.label}</p>
             </div>
           ))}
         </div>
 
         <motion.div
-          className="flex justify-center mt-12"
+          className="flex justify-center mt-10 sm:mt-12"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}

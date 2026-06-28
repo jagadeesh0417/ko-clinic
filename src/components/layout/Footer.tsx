@@ -35,27 +35,9 @@ const stagger = {
 
 export function Footer() {
   return (
-    <footer
-      style={{
-        backgroundColor: "#2B1C15",
-        color: "#F6F0EA",
-        padding: "80px 0 0",
-      }}
-    >
-      <div
-        style={{
-          maxWidth: 1280,
-          margin: "0 auto",
-          padding: "0 24px",
-        }}
-      >
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(4, 1fr)",
-            gap: 48,
-          }}
-        >
+    <footer className="bg-[#2B1C15] text-[#F6F0EA] pt-12 sm:pt-16 md:pt-20">
+      <div className="container-custom">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 lg:gap-12">
           {/* Column 1 - Brand */}
           <motion.div
             custom={0}
@@ -63,33 +45,18 @@ export function Footer() {
             whileInView="visible"
             viewport={{ once: true }}
             variants={stagger}
+            className="text-center sm:text-left"
           >
-            <Link href="/" style={{ textDecoration: "none" }}>
-              <h2
-                style={{
-                  fontSize: 28,
-                  fontWeight: 700,
-                  letterSpacing: "0.15em",
-                  color: "#D6B787",
-                  margin: "0 0 6px",
-                }}
-              >
+            <Link href="/" className="inline-block">
+              <h2 className="font-heading text-2xl sm:text-[28px] font-bold tracking-[0.15em] text-[#D6B787] mb-1.5">
                 KO
-                <span style={{ color: "#C5A067" }}> CLINIC</span>
+                <span className="text-[#C5A067]"> CLINIC</span>
               </h2>
             </Link>
-            <p
-              style={{
-                color: "#8E7C6E",
-                fontSize: 14,
-                lineHeight: 1.7,
-                margin: "0 0 24px",
-              }}
-            >
-              Redefining luxury aesthetics with precision, artistry, and
-              world-class care. Your journey to timeless beauty begins here.
+            <p className="text-[#8E7C6E] text-sm leading-relaxed mb-6 max-w-xs mx-auto sm:mx-0">
+              Redefining luxury aesthetics with precision, artistry, and world-class care. Your journey to timeless beauty begins here.
             </p>
-            <div style={{ display: "flex", gap: 12 }}>
+            <div className="flex gap-3 justify-center sm:justify-start">
               {[
                 { icon: Globe, label: "Website" },
                 { icon: MessageCircle, label: "WhatsApp" },
@@ -101,28 +68,9 @@ export function Footer() {
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.95 }}
                   aria-label={label}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    width: 42,
-                    height: 42,
-                    borderRadius: "50%",
-                    border: "1px solid rgba(214,183,135,0.25)",
-                    color: "#D6B787",
-                    textDecoration: "none",
-                    transition: "all 0.3s ease",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = "#D6B787"
-                    e.currentTarget.style.color = "#2B1C15"
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor = "transparent"
-                    e.currentTarget.style.color = "#D6B787"
-                  }}
+                  className="flex items-center justify-center w-10 h-10 rounded-full border border-[rgba(214,183,135,0.25)] text-[#D6B787] hover:bg-[#D6B787] hover:text-[#2B1C15] transition-all duration-300"
                 >
-                  <Icon size={18} />
+                  <Icon size={16} />
                 </motion.a>
               ))}
             </div>
@@ -135,41 +83,19 @@ export function Footer() {
             whileInView="visible"
             viewport={{ once: true }}
             variants={stagger}
+            className="text-center sm:text-left"
           >
-            <h3
-              style={{
-                fontSize: 16,
-                fontWeight: 600,
-                letterSpacing: "0.1em",
-                color: "#D6B787",
-                margin: "0 0 24px",
-                textTransform: "uppercase",
-              }}
-            >
+            <h3 className="font-heading text-base font-semibold tracking-[0.1em] text-[#D6B787] mb-6 uppercase">
               Quick Links
             </h3>
-            <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+            <ul className="space-y-3.5">
               {quickLinks.map((link) => (
-                <li key={link.label} style={{ marginBottom: 14 }}>
+                <li key={link.label}>
                   <Link
                     href={link.href}
-                    style={{
-                      color: "#E8DDD1",
-                      textDecoration: "none",
-                      fontSize: 14,
-                      transition: "color 0.3s ease",
-                      display: "inline-flex",
-                      alignItems: "center",
-                      gap: 6,
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.color = "#D6B787"
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.color = "#E8DDD1"
-                    }}
+                    className="text-[#E8DDD1] text-sm hover:text-[#D6B787] transition-colors inline-flex items-center gap-1.5"
                   >
-                    <ArrowRight size={12} style={{ color: "#C5A067" }} />
+                    <ArrowRight size={11} className="text-[#C5A067]" />
                     {link.label}
                   </Link>
                 </li>
@@ -184,36 +110,17 @@ export function Footer() {
             whileInView="visible"
             viewport={{ once: true }}
             variants={stagger}
+            className="text-center sm:text-left"
           >
-            <h3
-              style={{
-                fontSize: 16,
-                fontWeight: 600,
-                letterSpacing: "0.1em",
-                color: "#D6B787",
-                margin: "0 0 24px",
-                textTransform: "uppercase",
-              }}
-            >
+            <h3 className="font-heading text-base font-semibold tracking-[0.1em] text-[#D6B787] mb-6 uppercase">
               Popular Procedures
             </h3>
-            <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+            <ul className="space-y-3.5">
               {procedures.map((item) => (
-                <li key={item.label} style={{ marginBottom: 14 }}>
+                <li key={item.label}>
                   <Link
                     href={item.href}
-                    style={{
-                      color: "#E8DDD1",
-                      textDecoration: "none",
-                      fontSize: 14,
-                      transition: "color 0.3s ease",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.color = "#D6B787"
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.color = "#E8DDD1"
-                    }}
+                    className="text-[#E8DDD1] text-sm hover:text-[#D6B787] transition-colors"
                   >
                     {item.label}
                   </Link>
@@ -229,145 +136,65 @@ export function Footer() {
             whileInView="visible"
             viewport={{ once: true }}
             variants={stagger}
+            className="text-center sm:text-left"
           >
-            <h3
-              style={{
-                fontSize: 16,
-                fontWeight: 600,
-                letterSpacing: "0.1em",
-                color: "#D6B787",
-                margin: "0 0 24px",
-                textTransform: "uppercase",
-              }}
-            >
+            <h3 className="font-heading text-base font-semibold tracking-[0.1em] text-[#D6B787] mb-6 uppercase">
               Contact
             </h3>
-            <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-              <div style={{ display: "flex", alignItems: "flex-start", gap: 12 }}>
-                <Phone size={16} style={{ color: "#C5A067", marginTop: 3, flexShrink: 0 }} />
-                <div>
-                  <p style={{ margin: 0, fontSize: 12, color: "#8E7C6E" }}>India</p>
-                  <a
-                    href="tel:+919148717036"
-                    style={{
-                      color: "#E8DDD1",
-                      textDecoration: "none",
-                      fontSize: 14,
-                      transition: "color 0.3s ease",
-                    }}
-                    onMouseEnter={(e) => { e.currentTarget.style.color = "#D6B787" }}
-                    onMouseLeave={(e) => { e.currentTarget.style.color = "#E8DDD1" }}
-                  >
+            <div className="flex flex-col gap-4 items-center sm:items-start">
+              <div className="flex items-start gap-3">
+                <Phone size={15} className="text-[#C5A067] mt-0.5 shrink-0" />
+                <div className="text-left">
+                  <p className="text-[10px] uppercase tracking-[0.1em] text-[#8E7C6E] mb-0.5">India</p>
+                  <a href="tel:+919148717036" className="text-[#E8DDD1] text-sm hover:text-[#D6B787] transition-colors">
                     +91 9148717036
                   </a>
                 </div>
               </div>
-              <div style={{ display: "flex", alignItems: "flex-start", gap: 12 }}>
-                <Phone size={16} style={{ color: "#C5A067", marginTop: 3, flexShrink: 0 }} />
-                <div>
-                  <p style={{ margin: 0, fontSize: 12, color: "#8E7C6E" }}>Hong Kong</p>
-                  <a
-                    href="tel:+85244608658"
-                    style={{
-                      color: "#E8DDD1",
-                      textDecoration: "none",
-                      fontSize: 14,
-                      transition: "color 0.3s ease",
-                    }}
-                    onMouseEnter={(e) => { e.currentTarget.style.color = "#D6B787" }}
-                    onMouseLeave={(e) => { e.currentTarget.style.color = "#E8DDD1" }}
-                  >
+              <div className="flex items-start gap-3">
+                <Phone size={15} className="text-[#C5A067] mt-0.5 shrink-0" />
+                <div className="text-left">
+                  <p className="text-[10px] uppercase tracking-[0.1em] text-[#8E7C6E] mb-0.5">Hong Kong</p>
+                  <a href="tel:+85244608658" className="text-[#E8DDD1] text-sm hover:text-[#D6B787] transition-colors">
                     +852 44608658
                   </a>
                 </div>
               </div>
-              <div style={{ display: "flex", alignItems: "flex-start", gap: 12 }}>
-                <Phone size={16} style={{ color: "#C5A067", marginTop: 3, flexShrink: 0 }} />
-                <div>
-                  <p style={{ margin: 0, fontSize: 12, color: "#8E7C6E" }}>Philippines</p>
-                  <a
-                    href="tel:+639661688381"
-                    style={{
-                      color: "#E8DDD1",
-                      textDecoration: "none",
-                      fontSize: 14,
-                      transition: "color 0.3s ease",
-                    }}
-                    onMouseEnter={(e) => { e.currentTarget.style.color = "#D6B787" }}
-                    onMouseLeave={(e) => { e.currentTarget.style.color = "#E8DDD1" }}
-                  >
+              <div className="flex items-start gap-3">
+                <Phone size={15} className="text-[#C5A067] mt-0.5 shrink-0" />
+                <div className="text-left">
+                  <p className="text-[10px] uppercase tracking-[0.1em] text-[#8E7C6E] mb-0.5">Philippines</p>
+                  <a href="tel:+639661688381" className="text-[#E8DDD1] text-sm hover:text-[#D6B787] transition-colors">
                     +63 9661688381
                   </a>
                 </div>
               </div>
-              <div style={{ display: "flex", alignItems: "flex-start", gap: 12 }}>
-                <Mail size={16} style={{ color: "#C5A067", marginTop: 3, flexShrink: 0 }} />
-                <a
-                  href="mailto:drvikas090909@gmail.com"
-                  style={{
-                    color: "#E8DDD1",
-                    textDecoration: "none",
-                    fontSize: 14,
-                    transition: "color 0.3s ease",
-                  }}
-                  onMouseEnter={(e) => { e.currentTarget.style.color = "#D6B787" }}
-                  onMouseLeave={(e) => { e.currentTarget.style.color = "#E8DDD1" }}
-                >
+              <div className="flex items-start gap-3">
+                <Mail size={15} className="text-[#C5A067] mt-0.5 shrink-0" />
+                <a href="mailto:drvikas090909@gmail.com" className="text-[#E8DDD1] text-sm hover:text-[#D6B787] transition-colors text-left">
                   drvikas090909@gmail.com
                 </a>
               </div>
-              <div style={{ display: "flex", alignItems: "flex-start", gap: 12 }}>
-                <Clock size={16} style={{ color: "#C5A067", marginTop: 3, flexShrink: 0 }} />
-                <div>
-                  <p style={{ margin: 0, fontSize: 12, color: "#8E7C6E" }}>Hours</p>
-                  <p style={{ margin: 0, color: "#E8DDD1", fontSize: 14 }}>
-                    Mon-Sat 10AM - 7PM
-                  </p>
+              <div className="flex items-start gap-3">
+                <Clock size={15} className="text-[#C5A067] mt-0.5 shrink-0" />
+                <div className="text-left">
+                  <p className="text-[10px] uppercase tracking-[0.1em] text-[#8E7C6E] mb-0.5">Hours</p>
+                  <p className="text-[#E8DDD1] text-sm">Mon-Sat 10AM - 7PM</p>
                 </div>
               </div>
             </div>
           </motion.div>
         </div>
 
-        {/* Luxury Divider */}
-        <div
-          style={{
-            height: 1,
-            background:
-              "linear-gradient(90deg, transparent, rgba(214,183,135,0.25), transparent)",
-            margin: "60px 0 0",
-          }}
-        />
+        <div className="h-[1px] bg-gradient-to-r from-transparent via-[rgba(214,183,135,0.25)] to-transparent mt-12 sm:mt-16" />
 
-        {/* Bottom Bar */}
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            padding: "24px 0",
-            flexWrap: "wrap",
-            gap: 8,
-          }}
-        >
-          <p
-            style={{
-              margin: 0,
-              fontSize: 13,
-              color: "#8E7C6E",
-            }}
-          >
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 py-6">
+          <p className="text-xs sm:text-sm text-[#8E7C6E] text-center sm:text-left">
             &copy; 2026 KO CLINIC by Kosmedixx. All Rights Reserved.
           </p>
-          <p
-            style={{
-              margin: 0,
-              fontSize: 13,
-              color: "#8E7C6E",
-            }}
-          >
+          <p className="text-xs sm:text-sm text-[#8E7C6E] text-center sm:text-right">
             Designed and Developed by{" "}
-            <span style={{ color: "#D6B787", transition: "color 0.3s ease" }}>
+            <span className="text-[#D6B787] hover:text-[#C5A067] transition-colors">
               Crawlers Technologies
             </span>
           </p>
