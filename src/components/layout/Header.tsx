@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, ChevronDown, Globe } from "lucide-react";
+import { Menu, X, ChevronDown, Globe, User, Building2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const destinations = [
@@ -20,6 +20,11 @@ const destinations = [
 
 const navItems = [
   {
+    label: "Patient Portal",
+    href: "/patient-portal",
+    isPrimary: true,
+  },
+  {
     label: "Destinations",
     href: "/destinations",
     mega: destinations,
@@ -27,6 +32,11 @@ const navItems = [
   { label: "Concierge", href: "/concierge" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
+  {
+    label: "Clinic Portal",
+    href: "/clinic-portal",
+    isSecondary: true,
+  },
 ];
 
 export function Header() {
@@ -79,7 +89,35 @@ export function Header() {
 
           <nav className="hidden xl:flex items-center gap-1">
             {navItems.map((item) =>
-              item.mega ? (
+              item.isPrimary ? (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`relative inline-flex items-center gap-1.5 px-4 py-2 text-[10px] font-button uppercase tracking-[0.2em] rounded-full transition-all duration-500 overflow-hidden group/portal ${
+                    scrolled
+                      ? "bg-gradient-to-r from-champagne to-champagne-dark text-deep-black shadow-md hover:shadow-lg hover:shadow-champagne/20"
+                      : "bg-gradient-to-r from-champagne to-champagne-dark text-deep-black shadow-md hover:shadow-lg hover:shadow-champagne/20"
+                  }`}
+                >
+                  <User className="w-3 h-3 relative z-10" />
+                  <span className="relative z-10">{item.label}</span>
+                  <span className="absolute inset-0 bg-ivory translate-y-full group-hover/portal:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]" />
+                  <span className="absolute inset-0 bg-ivory/20 opacity-0 group-hover/portal:opacity-100 transition-opacity duration-300" />
+                </Link>
+              ) : item.isSecondary ? (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`relative inline-flex items-center gap-1.5 px-3 py-1.5 text-[9px] font-button uppercase tracking-[0.15em] rounded-full border transition-all duration-300 ${
+                    scrolled
+                      ? "border-champagne/40 text-mid-gray hover:border-champagne hover:text-champagne-dark"
+                      : "border-ivory/25 text-white/60 hover:border-champagne hover:text-champagne"
+                  }`}
+                >
+                  <Building2 className="w-2.5 h-2.5" />
+                  <span>{item.label}</span>
+                </Link>
+              ) : item.mega ? (
                 <div
                   key={item.href}
                   className="relative"
@@ -156,14 +194,6 @@ export function Header() {
                 <Link href="/contact">Enquire Now</Link>
               </Button>
             </motion.div>
-            <Link
-              href="/patient-portal"
-              className={`text-[9px] font-button uppercase tracking-[0.15em] transition-colors ${
-                scrolled ? "text-mid-gray hover:text-champagne-dark" : "text-white/60 hover:text-champagne"
-              }`}
-            >
-              Patient Portal
-            </Link>
           </div>
 
           <button
@@ -192,14 +222,24 @@ export function Header() {
             transition={{ duration: 0.3 }}
             className="fixed inset-0 z-40 bg-ivory/98 backdrop-blur-2xl xl:hidden flex flex-col"
           >
-            <nav className="flex flex-col items-center justify-center flex-1 gap-4 sm:gap-5 px-6 overflow-y-auto py-24">
-              <Link
-                href="/"
-                onClick={() => setIsOpen(false)}
-                className="font-heading text-2xl text-deep-black hover:text-champagne-dark transition-all block text-center"
+            <nav className="flex flex-col items-center justify-center flex-1 gap-5 px-6 overflow-y-auto py-24">
+              {/* Patient Portal - Primary */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0, duration: 0.4 }}
               >
-                Home
-              </Link>
+                <Link
+                  href="/patient-portal"
+                  onClick={() => setIsOpen(false)}
+                  className="inline-flex items-center gap-2 bg-gradient-to-r from-champagne to-champagne-dark text-deep-black px-6 py-3 rounded-full text-xs font-button uppercase tracking-[0.2em] shadow-md"
+                >
+                  <User className="w-3.5 h-3.5" />
+                  Patient Portal
+                </Link>
+              </motion.div>
+
+              {/* Destinations */}
               <div className="space-y-3 w-full max-w-xs">
                 <p className="text-center font-button text-[9px] uppercase tracking-[0.2em] text-mid-gray">
                   Destinations
@@ -217,12 +257,14 @@ export function Header() {
                   ))}
                 </div>
               </div>
+
+              {/* Concierge, About, Contact */}
               {["Concierge", "About", "Contact"].map((label, i) => (
                 <motion.div
                   key={label}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.05, duration: 0.4 }}
+                  transition={{ delay: 0.1 + i * 0.05, duration: 0.4 }}
                 >
                   <Link
                     href={`/${label.toLowerCase()}`}
@@ -233,20 +275,33 @@ export function Header() {
                   </Link>
                 </motion.div>
               ))}
+
+              {/* Clinic Portal - Secondary */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.25, duration: 0.4 }}
+              >
+                <Link
+                  href="/clinic-portal"
+                  onClick={() => setIsOpen(false)}
+                  className="inline-flex items-center gap-2 border border-champagne/40 text-mid-gray px-5 py-2 rounded-full text-[10px] font-button uppercase tracking-[0.15em] hover:border-champagne hover:text-champagne-dark transition-all"
+                >
+                  <Building2 className="w-3 h-3" />
+                  Clinic Portal
+                </Link>
+              </motion.div>
+
+              {/* Enquire Now */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3, duration: 0.4 }}
-                className="mt-4 w-full max-w-[280px] space-y-3"
+                className="mt-2 w-full max-w-[280px]"
               >
                 <Button variant="primary" size="lg" asChild className="w-full">
                   <Link href="/contact" onClick={() => setIsOpen(false)}>
                     Enquire Now
-                  </Link>
-                </Button>
-                <Button variant="outline" size="lg" asChild className="w-full">
-                  <Link href="/patient-portal" onClick={() => setIsOpen(false)}>
-                    Patient Portal
                   </Link>
                 </Button>
               </motion.div>

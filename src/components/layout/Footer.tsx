@@ -18,14 +18,15 @@ const destinations = [
 
 const quickLinks = [
   { label: "Home", href: "/" },
-  { label: "About", href: "/about" },
+  { label: "Patient Portal", href: "/patient-portal" },
   { label: "Concierge", href: "/concierge" },
+  { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
 ]
 
 const portals = [
   { label: "Patient Portal", href: "/patient-portal" },
-  { label: "Partner Portal", href: "/partner-portal" },
+  { label: "Clinic Portal", href: "/clinic-portal" },
 ]
 
 const stagger = {
