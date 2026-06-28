@@ -5,6 +5,8 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { WhatsAppButton } from "@/components/layout/WhatsAppButton";
 import { ConsultationWidget } from "@/components/layout/ConsultationWidget";
+import { Preloader } from "@/components/layout/Preloader";
+import { SmoothScroll } from "@/components/layout/SmoothScroll";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -88,11 +90,14 @@ export default function RootLayout({
   return (
     <html lang="en" className={`scroll-smooth ${cormorant.variable} ${playfair.variable} ${inter.variable} ${montserrat.variable}`}>
       <body className="min-h-screen bg-[#241710] text-[#F6F0EA] antialiased">
-        <Header />
-        <main>{children}</main>
-        <Footer />
-        <WhatsAppButton />
-        <ConsultationWidget />
+        <Preloader />
+        <SmoothScroll>
+          <Header />
+          <main>{children}</main>
+          <Footer />
+          <WhatsAppButton />
+          <ConsultationWidget />
+        </SmoothScroll>
       </body>
     </html>
   );

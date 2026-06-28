@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Phone, ChevronDown } from "lucide-react";
@@ -37,27 +37,43 @@ export function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [megaOpen, setMegaOpen] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", handleScroll);
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      setScrolled(scrollY > 50);
+      if (headerRef.current) {
+        const shrink = Math.max(0.7, 1 - scrollY / 800);
+        headerRef.current.style.transform = `translateY(${Math.min(0, -scrollY * 0.05)}px)`;
+      }
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
     <>
       <header
+        ref={headerRef}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ${
           scrolled
-            ? "bg-[rgba(36,23,16,0.95)] backdrop-blur-2xl border-b border-[rgba(214,183,135,0.06)] shadow-[0_4px_30px_rgba(0,0,0,0.3)]"
-            : "bg-gradient-to-b from-[rgba(36,23,16,0.6)] to-transparent"
+            ? "bg-[rgba(36,23,16,0.92)] backdrop-blur-2xl border-b border-[rgba(214,183,135,0.06)] shadow-[0_4px_30px_rgba(0,0,0,0.3)]"
+            : "bg-gradient-to-b from-[rgba(36,23,16,0.5)] to-transparent"
         }`}
       >
-        <div className="container-custom flex items-center justify-between h-20 md:h-24 px-6">
+        <div className="container-custom flex items-center justify-between h-20 md:h-24 px-6 transition-all duration-500">
           <Link href="/" className="relative z-10 group">
-            <span className="font-heading text-2xl md:text-3xl font-bold text-[#F6F0EA] tracking-[0.15em]">
-              KO <span className="champagne-text group-hover:opacity-80 transition-opacity">CLINIC</span>
-            </span>
+            <motion.span
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6 }}
+              className="font-heading text-2xl md:text-3xl font-bold text-[#F6F0EA] tracking-[0.15em]"
+            >
+              KO{" "}
+              <span className="champagne-text group-hover:opacity-80 transition-opacity">CLINIC</span>
+            </motion.span>
+            <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-gradient-to-r from-[#D6B787] to-transparent group-hover:w-full transition-all duration-500" />
           </Link>
 
           <nav className="hidden lg:flex items-center gap-1">
@@ -71,28 +87,30 @@ export function Header() {
                 >
                   <Link
                     href={item.href}
-                    className="px-3 py-2 text-[11px] text-[#8E7C6E] hover:text-[#D6B787] transition-colors font-button uppercase tracking-[0.2em] flex items-center gap-1"
+                    className="relative px-3 py-2 text-[11px] text-[#8E7C6E] hover:text-[#D6B787] transition-colors font-button uppercase tracking-[0.2em] flex items-center gap-1 group/link"
                   >
                     {item.label}
-                    <ChevronDown className="w-3 h-3" />
+                    <ChevronDown className="w-3 h-3 transition-transform duration-300 group-hover/link:rotate-180" />
+                    <span className="absolute bottom-0 left-3 right-3 h-[1px] bg-[#D6B787] scale-x-0 group-hover/link:scale-x-100 transition-transform duration-300 origin-left" />
                   </Link>
                   <AnimatePresence>
                     {megaOpen && (
                       <motion.div
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: 10 }}
-                        transition={{ duration: 0.2 }}
+                        initial={{ opacity: 0, y: 10, scale: 0.98 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: 10, scale: 0.98 }}
+                        transition={{ duration: 0.25, ease: [0.25, 0.46, 0.45, 0.94] }}
                         className="absolute top-full left-1/2 -translate-x-1/2 pt-4"
                       >
-                        <div className="glassmorphism rounded-2xl p-6 min-w-[600px] grid grid-cols-2 gap-2 shadow-2xl">
+                        <div className="glassmorphism rounded-2xl p-6 min-w-[600px] grid grid-cols-2 gap-2 shadow-2xl border-[rgba(214,183,135,0.15)]">
                           {item.mega.map((sub) => (
                             <Link
                               key={sub.href}
                               href={sub.href}
-                              className="px-4 py-3 rounded-xl text-sm text-[#8E7C6E] hover:text-[#D6B787] hover:bg-[rgba(214,183,135,0.04)] transition-all font-body"
+                              className="relative px-4 py-3 rounded-xl text-sm text-[#8E7C6E] hover:text-[#D6B787] hover:bg-[rgba(214,183,135,0.04)] transition-all font-body group/sub overflow-hidden"
                             >
-                              {sub.label}
+                              <span className="relative z-10">{sub.label}</span>
+                              <span className="absolute inset-0 bg-gradient-to-r from-[rgba(214,183,135,0.06)] to-transparent opacity-0 group-hover/sub:opacity-100 transition-opacity duration-300" />
                             </Link>
                           ))}
                         </div>
@@ -104,27 +122,31 @@ export function Header() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="px-3 py-2 text-[11px] text-[#8E7C6E] hover:text-[#D6B787] transition-colors font-button uppercase tracking-[0.2em]"
+                  className="relative px-3 py-2 text-[11px] text-[#8E7C6E] hover:text-[#D6B787] transition-colors font-button uppercase tracking-[0.2em] group"
                 >
                   {item.label}
+                  <span className="absolute bottom-0 left-3 right-3 h-[1px] bg-[#D6B787] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
                 </Link>
               )
             )}
           </nav>
 
           <div className="hidden lg:flex items-center gap-4">
-            <a
+            <motion.a
               href="tel:+919148717036"
+              whileHover={{ scale: 1.05 }}
               className="flex items-center gap-2 text-[#D6B787] hover:text-[#C5A067] transition-colors text-sm group"
             >
               <span className="w-8 h-8 rounded-full border border-[rgba(214,183,135,0.25)] flex items-center justify-center group-hover:bg-[rgba(214,183,135,0.1)] transition-all">
                 <Phone className="w-3.5 h-3.5" />
               </span>
               <span className="font-button text-[10px] tracking-[0.15em] uppercase">Call</span>
-            </a>
-            <Button variant="primary" size="sm" asChild>
-              <Link href="/contact">Book Appointment</Link>
-            </Button>
+            </motion.a>
+            <motion.div whileHover={{ scale: 1.02 }}>
+              <Button variant="primary" size="sm" asChild>
+                <Link href="/contact">Book Appointment</Link>
+              </Button>
+            </motion.div>
           </div>
 
           <button
