@@ -21,11 +21,11 @@ export function GlassCard({
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.6, delay }}
-      whileHover={hover ? { y: -5, transition: { duration: 0.3 } } : undefined}
+      transition={{ duration: 0.6, delay, ease: [0.25, 0.46, 0.45, 0.94] }}
+      whileHover={hover ? { y: -6, transition: { duration: 0.3 } } : undefined}
       className={cn(
-        "glassmorphism rounded-sm p-6 md:p-8 transition-all duration-500",
-        hover && "hover:border-[rgba(201,168,106,0.3)] hover:shadow-lg hover:shadow-[rgba(201,168,106,0.05)]",
+        "glassmorphism rounded-2xl p-6 md:p-8 transition-all duration-500",
+        hover && "hover:border-[rgba(213,185,138,0.25)] hover:shadow-xl hover:shadow-[rgba(34,22,15,0.3)]",
         className
       )}
     >

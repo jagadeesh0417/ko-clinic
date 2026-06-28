@@ -6,18 +6,18 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#C9A86A] disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#C8A96B] disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
         primary:
-          "bg-gradient-to-r from-[#C9A86A] to-[#D4AF37] text-[#080808] hover:opacity-90 hover:translate-y-[-2px] shadow-lg hover:shadow-[0_20px_40px_rgba(201,168,106,0.2)] uppercase tracking-widest",
+          "bg-gradient-to-r from-[#C8A96B] to-[#B8905A] text-[#22160F] hover:opacity-90 hover:translate-y-[-2px] shadow-lg hover:shadow-[0_20px_40px_rgba(200,169,107,0.15)] uppercase tracking-widest rounded-full",
         outline:
-          "border border-[rgba(201,168,106,0.5)] text-[#FAFAFA] hover:bg-[rgba(201,168,106,0.1)] hover:border-[#C9A86A] hover:translate-y-[-2px] uppercase tracking-widest",
+          "border border-[rgba(213,185,138,0.4)] text-[#F5F0EA] hover:bg-[rgba(213,185,138,0.08)] hover:border-[#D5B98A] hover:translate-y-[-2px] uppercase tracking-widest rounded-full",
         ghost:
-          "text-[#A1A1AA] hover:text-[#FAFAFA] hover:bg-[rgba(255,255,255,0.05)]",
-        dark: "bg-[#080808] text-[#FAFAFA] border border-[rgba(255,255,255,0.1)] hover:bg-[#101010] hover:border-[rgba(201,168,106,0.3)]",
-        gold: "bg-[#C9A86A] text-[#080808] hover:bg-[#D4AF37] uppercase tracking-widest",
+          "text-[#7D6B5A] hover:text-[#F5F0EA] hover:bg-[rgba(245,240,234,0.04)]",
+        dark: "bg-[#22160F] text-[#F5F0EA] border border-[rgba(213,185,138,0.15)] hover:bg-[#2A1A12] hover:border-[rgba(213,185,138,0.3)] rounded-full",
+        gold: "bg-[#C8A96B] text-[#22160F] hover:bg-[#D5B98A] uppercase tracking-widest rounded-full",
       },
       size: {
         default: "h-12 px-8 py-3",

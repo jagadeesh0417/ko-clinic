@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Phone, Mail, MapPin, Globe, Camera, Share2, Video } from "lucide-react";
+import { Phone, Mail, MapPin, Camera, Globe, Share2, Video } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 
 const quickLinks = [
@@ -19,21 +19,15 @@ const quickLinks = [
 const treatments = [
   { label: "Micro Bio-FUE", href: "/treatments/micro-bio-fue" },
   { label: "Morpheus MNRF", href: "/treatments/morpheus-mnrf" },
-  { label: "Botox", href: "/treatments/botox-fillers" },
+  { label: "Botox & Fillers", href: "/treatments/botox-fillers" },
   { label: "PRP Therapy", href: "/treatments/prp-gfc-therapy" },
   { label: "Exosome Therapy", href: "/treatments/exosome-therapy" },
   { label: "Thread Lift", href: "/treatments/pdo-thread-lift" },
 ];
 
-const legal = [
-  { label: "Privacy Policy", href: "/privacy-policy" },
-  { label: "Terms & Conditions", href: "/terms" },
-  { label: "Disclaimer", href: "/disclaimer" },
-];
-
 export function Footer() {
   return (
-    <footer className="bg-[#080808] border-t border-[rgba(201,168,106,0.1)]">
+    <footer className="bg-[#22160F] border-t border-[rgba(213,185,138,0.08)]">
       <div className="container-custom px-6 py-16 md:py-24">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           <motion.div
@@ -41,10 +35,10 @@ export function Footer() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h3 className="font-heading text-3xl text-[#FAFAFA] mb-4">
-              KO <span className="text-gradient-gold">CLINIC</span>
+            <h3 className="font-heading text-3xl text-[#F5F0EA] mb-4">
+              KO <span className="champagne-text">CLINIC</span>
             </h3>
-            <p className="text-[#A1A1AA] text-sm leading-relaxed mb-6 font-body">
+            <p className="text-[#7D6B5A] text-sm leading-relaxed mb-6 font-body">
               A premium global aesthetics brand dedicated to enhancing natural beauty through science, precision and innovation.
             </p>
             <div className="flex gap-4">
@@ -57,7 +51,7 @@ export function Footer() {
                 <a
                   key={i}
                   href={href}
-                  className="w-10 h-10 rounded-sm border border-[rgba(201,168,106,0.2)] flex items-center justify-center text-[#A1A1AA] hover:text-[#C9A86A] hover:border-[#C9A86A] transition-all"
+                  className="w-10 h-10 rounded-full border border-[rgba(213,185,138,0.15)] flex items-center justify-center text-[#7D6B5A] hover:text-[#D5B98A] hover:border-[#D5B98A] transition-all"
                 >
                   <Icon className="w-4 h-4" />
                 </a>
@@ -71,7 +65,7 @@ export function Footer() {
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
           >
-            <h4 className="font-button text-xs uppercase tracking-[3px] text-[#C9A86A] mb-6">
+            <h4 className="font-button text-xs uppercase tracking-[3px] text-[#D5B98A] mb-6">
               Quick Links
             </h4>
             <ul className="space-y-3">
@@ -79,7 +73,7 @@ export function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-[#A1A1AA] hover:text-[#FAFAFA] text-sm transition-colors font-body"
+                    className="text-[#7D6B5A] hover:text-[#F5F0EA] text-sm transition-colors font-body"
                   >
                     {link.label}
                   </Link>
@@ -94,15 +88,15 @@ export function Footer() {
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
           >
-            <h4 className="font-button text-xs uppercase tracking-[3px] text-[#C9A86A] mb-6">
-              Popular Treatments
+            <h4 className="font-button text-xs uppercase tracking-[3px] text-[#D5B98A] mb-6">
+              Treatments
             </h4>
             <ul className="space-y-3">
               {treatments.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-[#A1A1AA] hover:text-[#FAFAFA] text-sm transition-colors font-body"
+                    className="text-[#7D6B5A] hover:text-[#F5F0EA] text-sm transition-colors font-body"
                   >
                     {link.label}
                   </Link>
@@ -117,42 +111,36 @@ export function Footer() {
             viewport={{ once: true }}
             transition={{ delay: 0.3 }}
           >
-            <h4 className="font-button text-xs uppercase tracking-[3px] text-[#C9A86A] mb-6">
+            <h4 className="font-button text-xs uppercase tracking-[3px] text-[#D5B98A] mb-6">
               Contact
             </h4>
             <ul className="space-y-4">
               <li>
-                <a
-                  href="mailto:drvikas090909@gmail.com"
-                  className="flex items-center gap-3 text-[#A1A1AA] hover:text-[#FAFAFA] text-sm transition-colors"
-                >
-                  <Mail className="w-4 h-4 text-[#C9A86A]" />
+                <a href="mailto:drvikas090909@gmail.com" className="flex items-center gap-3 text-[#7D6B5A] hover:text-[#F5F0EA] text-sm transition-colors">
+                  <Mail className="w-4 h-4 text-[#C8A96B]" />
                   drvikas090909@gmail.com
                 </a>
               </li>
               <li>
-                <a
-                  href="tel:+919148717036"
-                  className="flex items-center gap-3 text-[#A1A1AA] hover:text-[#FAFAFA] text-sm transition-colors"
-                >
-                  <Phone className="w-4 h-4 text-[#C9A86A]" />
+                <a href="tel:+919148717036" className="flex items-center gap-3 text-[#7D6B5A] hover:text-[#F5F0EA] text-sm transition-colors">
+                  <Phone className="w-4 h-4 text-[#C8A96B]" />
                   +91 9148717036
                 </a>
               </li>
               <li>
-                <div className="flex items-start gap-3 text-[#A1A1AA] text-sm">
-                  <MapPin className="w-4 h-4 text-[#C9A86A] mt-0.5" />
+                <div className="flex items-start gap-3 text-[#7D6B5A] text-sm">
+                  <MapPin className="w-4 h-4 text-[#C8A96B] mt-0.5" />
                   <span>Koramangala, Bengaluru</span>
                 </div>
               </li>
             </ul>
             <div className="mt-6 space-y-2">
-              {legal.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="block text-xs text-[#A1A1AA] hover:text-[#C9A86A] transition-colors font-body"
-                >
+              {[
+                { label: "Privacy Policy", href: "/privacy-policy" },
+                { label: "Terms & Conditions", href: "/terms" },
+                { label: "Disclaimer", href: "/disclaimer" },
+              ].map((link) => (
+                <Link key={link.href} href={link.href} className="block text-xs text-[#7D6B5A] hover:text-[#D5B98A] transition-colors font-body">
                   {link.label}
                 </Link>
               ))}
@@ -160,15 +148,14 @@ export function Footer() {
           </motion.div>
         </div>
 
-        <Separator className="my-8" />
+        <Separator className="my-8 bg-[rgba(213,185,138,0.1)]" />
 
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-[#A1A1AA] text-xs font-body">
+          <p className="text-[#7D6B5A] text-xs font-body">
             &copy; {new Date().getFullYear()} KO Clinic by Kosmedixx. All Rights Reserved.
           </p>
-          <p className="text-[#A1A1AA] text-xs font-body">
-            Designed & Developed by{" "}
-            <span className="text-[#C9A86A]">Crawlers Technologies</span>
+          <p className="text-[#7D6B5A] text-xs font-body">
+            Designed & Developed by <span className="text-[#C8A96B]">Crawlers Technologies</span>
           </p>
         </div>
       </div>
