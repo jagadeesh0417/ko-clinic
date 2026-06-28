@@ -1,94 +1,210 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { SectionHeading } from "@/components/ui/section-heading";
-import { ArrowRight, Award, Globe, Star, Users } from "lucide-react";
+import { GlassCard } from "@/components/ui/glass-card";
+import { Sparkles, Shield, Heart } from "lucide-react";
 
-const highlights = [
-  { icon: Award, label: "20+ Years", desc: "Clinical Excellence" },
-  { icon: Users, label: "3000+", desc: "Procedures" },
-  { icon: Star, label: "CEO & Founder", desc: "Kosmedixx Clinics" },
-  { icon: Globe, label: "10+", desc: "Global Locations" },
+const features = [
+  {
+    icon: Shield,
+    title: "Science-Backed",
+    description:
+      "Every treatment is rooted in the latest medical research and performed by certified professionals.",
+  },
+  {
+    icon: Sparkles,
+    title: "Artistically Delivered",
+    description:
+      "We approach every procedure as a craft, ensuring results that enhance your natural beauty.",
+  },
+  {
+    icon: Heart,
+    title: "Luxuriously Experienced",
+    description:
+      "From the moment you arrive, every detail is curated for your comfort and privacy.",
+  },
 ];
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.2 },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.7, ease: "easeOut" as const },
+  },
+};
 
 export function Introduction() {
   return (
-    <section className="section-padding bg-[#2A1A12]">
-      <div className="container-custom">
-        <SectionHeading
-          title="Where Science Meets Art"
-          subtitle="About KO Clinic"
-          description="A premium global aesthetics brand dedicated to enhancing natural beauty through science, precision and innovation."
-        />
+    <section className="relative overflow-hidden py-24 lg:py-32" style={{ backgroundColor: "#3A281E" }}>
+      {/* Decorative glassmorphism elements */}
+      <div
+        className="pointer-events-none absolute -left-32 -top-32 h-96 w-96 rounded-full opacity-20 blur-3xl"
+        style={{ background: "radial-gradient(circle, #D6B787 0%, transparent 70%)" }}
+      />
+      <div
+        className="pointer-events-none absolute -bottom-40 -right-40 h-[30rem] w-[30rem] rounded-full opacity-10 blur-3xl"
+        style={{ background: "radial-gradient(circle, #C5A067 0%, transparent 70%)" }}
+      />
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 mt-16 items-center">
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
-          >
-            <p className="text-[#7D6B5A] text-base md:text-lg leading-relaxed font-body mb-8">
-              KO Clinic is an internationally expanding chain of advanced hair, skin and regenerative aesthetic centers founded by Dr. Vikas Singh. The clinic combines cutting-edge technology, regenerative medicine, luxury patient care and artistic precision to deliver world-class aesthetic outcomes.
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          className="grid items-center gap-16 lg:grid-cols-2 lg:gap-24"
+        >
+          {/* Left — Brand Statement */}
+          <motion.div variants={itemVariants}>
+            <p
+              className="mb-4 text-sm font-semibold uppercase tracking-[0.2em]"
+              style={{ color: "#D6B787" }}
+            >
+              Welcome to KO CLINIC
             </p>
+            <h2
+              className="text-4xl font-light leading-tight tracking-tight sm:text-5xl lg:text-6xl"
+              style={{ color: "#F6F0EA" }}
+            >
+              Where Science{" "}
+              <span className="italic" style={{ color: "#D6B787" }}>
+                Meets
+              </span>{" "}
+              Art
+            </h2>
 
-            <div className="grid grid-cols-2 gap-4 mb-8">
-              {highlights.map(({ icon: Icon, label, desc }, i) => (
+            {/* Glassmorphism decorative divider */}
+            <div className="relative my-8 h-px w-24 overflow-hidden">
+              <div
+                className="absolute inset-0"
+                style={{ background: "linear-gradient(90deg, #D6B787, transparent)" }}
+              />
+              <div
+                className="absolute inset-0 backdrop-blur-sm"
+                style={{
+                  background:
+                    "linear-gradient(90deg, rgba(214,183,135,0.5), transparent)",
+                }}
+              />
+            </div>
+
+            <p className="max-w-md text-lg leading-relaxed" style={{ color: "#8E7C6E" }}>
+              We believe that true beauty emerges when clinical excellence meets
+              artistic vision. Our approach is built on a foundation of rigorous
+              science, elevated by an uncompromising dedication to aesthetics.
+            </p>
+            <p
+              className="mt-4 max-w-md text-base leading-relaxed"
+              style={{ color: "#8E7C6E" }}
+            >
+              At KO CLINIC, every treatment plan is as unique as you are. Our
+              specialists combine advanced technology with an artisan&apos;s touch
+              to deliver results that feel as natural as they are transformative.
+            </p>
+          </motion.div>
+
+          {/* Right — Description & Stats */}
+          <motion.div variants={itemVariants} className="space-y-6">
+            <GlassCard className="relative overflow-hidden border p-8" style={{ borderColor: "rgba(214,183,135,0.25)", backgroundColor: "#2B1C15" }}>
+              {/* Inner glass sheen */}
+              <div
+                className="pointer-events-none absolute -inset-1 opacity-30"
+                style={{
+                  background:
+                    "linear-gradient(135deg, rgba(214,183,135,0.1) 0%, transparent 50%, rgba(214,183,135,0.05) 100%)",
+                }}
+              />
+              <p className="relative text-base leading-relaxed" style={{ color: "#E8DDD1" }}>
+                Our philosophy is simple: you deserve a space where medical
+                expertise and luxurious care coexist. From the warmth of our
+                consultation rooms to the precision of our techniques, every
+                element is designed to make you feel seen, safe, and
+                extraordinary.
+              </p>
+            </GlassCard>
+
+            {/* Stats row */}
+            <div className="grid grid-cols-3 gap-4">
+              {[
+                { value: "15+", label: "Years Excellence" },
+                { value: "10K+", label: "Happy Clients" },
+                { value: "98%", label: "Satisfaction" },
+              ].map((stat) => (
                 <motion.div
-                  key={label}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 }}
-                  className="glassmorphism rounded-2xl p-4 flex items-center gap-3"
+                  key={stat.label}
+                  whileHover={{ y: -4 }}
+                  className="rounded-xl border p-4 text-center backdrop-blur-sm transition-colors"
+                  style={{
+                    borderColor: "rgba(214,183,135,0.25)",
+                    backgroundColor: "rgba(43,28,21,0.6)",
+                  }}
                 >
-                  <Icon className="w-5 h-5 text-[#C8A96B]" />
-                  <div>
-                    <p className="text-sm text-[#F5F0EA] font-heading">{label}</p>
-                    <p className="text-xs text-[#7D6B5A] font-body">{desc}</p>
-                  </div>
+                  <p
+                    className="text-xl font-semibold sm:text-2xl"
+                    style={{ color: "#D6B787" }}
+                  >
+                    {stat.value}
+                  </p>
+                  <p className="mt-1 text-xs tracking-wide" style={{ color: "#8E7C6E" }}>
+                    {stat.label}
+                  </p>
                 </motion.div>
               ))}
             </div>
 
-            <div className="space-y-6">
-              <div className="border-l-2 border-[#C8A96B] pl-6">
-                <h4 className="font-heading text-xl text-[#D5B98A] mb-2">Our Mission</h4>
-                <p className="text-[#7D6B5A] text-sm leading-relaxed font-body">
-                  To redefine the future of aesthetic medicine through science-backed, innovative and safe cosmetic solutions that enhance natural beauty and restore confidence.
-                </p>
-              </div>
-              <div className="border-l-2 border-[#C8A96B] pl-6">
-                <h4 className="font-heading text-xl text-[#D5B98A] mb-2">Our Vision</h4>
-                <p className="text-[#7D6B5A] text-sm leading-relaxed font-body">
-                  To establish the Kosmedixx network as a leading global chain of luxury aesthetic clinics accessible across continents.
-                </p>
-              </div>
+            {/* Feature cards */}
+            <div className="space-y-4 pt-4">
+              {features.map((feature) => {
+                const Icon = feature.icon;
+                return (
+                  <motion.div
+                    key={feature.title}
+                    whileHover={{ x: 6 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                  >
+                    <GlassCard
+                      className="flex items-start gap-4 border p-5 transition-colors"
+                      style={{
+                        borderColor: "rgba(214,183,135,0.25)",
+                        backgroundColor: "#241710",
+                      }}
+                    >
+                      <div
+                        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg"
+                        style={{ backgroundColor: "rgba(214,183,135,0.12)" }}
+                      >
+                        <Icon className="h-5 w-5" style={{ color: "#D6B787" }} />
+                      </div>
+                      <div>
+                        <p
+                          className="text-sm font-semibold"
+                          style={{ color: "#C5A067" }}
+                        >
+                          {feature.title}
+                        </p>
+                        <p
+                          className="mt-1 text-sm leading-relaxed"
+                          style={{ color: "#8E7C6E" }}
+                        >
+                          {feature.description}
+                        </p>
+                      </div>
+                    </GlassCard>
+                  </motion.div>
+                );
+              })}
             </div>
-
-            <Button variant="primary" className="mt-8" asChild>
-              <Link href="/about">Learn More <ArrowRight className="w-4 h-4" /></Link>
-            </Button>
           </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className="relative"
-          >
-            <div className="aspect-[4/5] rounded-2xl bg-gradient-to-br from-[rgba(213,185,138,0.12)] to-[rgba(60,40,29,0.8)] border border-[rgba(213,185,138,0.15)] flex items-center justify-center overflow-hidden">
-              <div className="text-center p-8">
-                <span className="font-heading text-6xl md:text-8xl champagne-text">KO</span>
-                <p className="font-heading text-xl text-[#7D6B5A] italic mt-4">Where Science Meets Art</p>
-              </div>
-            </div>
-            <div className="absolute -bottom-4 -right-4 w-full h-full rounded-2xl border border-[rgba(213,185,138,0.08)] -z-10" />
-          </motion.div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

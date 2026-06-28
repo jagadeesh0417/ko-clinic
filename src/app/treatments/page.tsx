@@ -1,103 +1,178 @@
-"use client";
+"use client"
 
-import { motion } from "framer-motion";
-import Link from "next/link";
-import { SectionHeading } from "@/components/ui/section-heading";
-import { Button } from "@/components/ui/button";
-import { ArrowRight, Syringe, Sparkles, Activity, Eye, Heart, Plus, Droplets } from "lucide-react";
+import { useState } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import { ArrowRight, Sparkles } from "lucide-react"
 
-const treatmentCategories = [
-  {
-    title: "Hair Restoration",
-    icon: Activity,
-    treatments: [
-      { name: "Micro Bio-FUE Hair Transplant", slug: "micro-bio-fue", description: "Permanent hair restoration with maximum density and accelerated growth." },
-      { name: "DHI Hair Transplant", slug: "dhi-hair-transplant", description: "Patented Choi Implanter Pen technology. 3000+ sessions, 98% graft survival." },
-      { name: "PRP & GFC Hair Therapy", slug: "prp-gfc-therapy", description: "Regenerative hair restoration for thinning hair and follicle activation." },
-    ],
-  },
-  {
-    title: "Skin Rejuvenation",
-    icon: Sparkles,
-    treatments: [
-      { name: "Morpheus MNRF", slug: "morpheus-mnrf", description: "Microneedling RF for acne scars, texture improvement, and skin tightening." },
-      { name: "Exosome Therapy", slug: "exosome-therapy", description: "Stem cell derived regenerative treatment for collagen stimulation." },
-      { name: "Laser Rejuvenation", slug: "laser-rejuvenation", description: "Fractional CO2, Q Switched Laser, Carbon Peel, Erbium Glass." },
-    ],
-  },
-  {
-    title: "Injectable Aesthetics",
-    icon: Syringe,
-    treatments: [
-      { name: "Botox", slug: "botox-fillers", description: "Wrinkle reduction and prevention with premium neurotoxins." },
-      { name: "Dermal Fillers", slug: "dermal-fillers", description: "Volume restoration, facial contouring, and lip enhancement." },
-      { name: "PDO Thread Lift", slug: "pdo-thread-lift", description: "Instant lifting, jawline contouring, and facial tightening." },
-    ],
-  },
-  {
-    title: "Body & Wellness",
-    icon: Heart,
-    treatments: [
-      { name: "Body Contouring", slug: "body-contouring", description: "Cryolipolysis, fat reduction, and double chin treatment." },
-      { name: "IV Vitamin Therapy", slug: "iv-vitamin-therapy", description: "Detoxification, hydration, and antioxidant infusion." },
-      { name: "Sexual Wellness", slug: "sexual-wellness", description: "ED1000, EMSELLA, pelvic strengthening, vitality restoration." },
-    ],
-  },
-  {
-    title: "Advanced Therapies",
-    icon: Plus,
-    treatments: [
-      { name: "EECP ECMR", slug: "eecp-ecmr", description: "Circulation enhancement, cardiac wellness, microcirculation support." },
-      { name: "Chelation Therapy", slug: "chelation-therapy", description: "Heavy metal detoxification and cellular rejuvenation." },
-      { name: "Cosmetic Surgery", slug: "cosmetic-surgery", description: "Advanced aesthetic surgery procedures." },
-    ],
-  },
-];
+const treatments = [
+  { title: "Micro Bio-FUE Hair Transplant", category: "Hair", desc: "Advanced follicular unit extraction with microscopic precision for natural, permanent hair restoration.", benefits: ["Minimally invasive", "Natural hairline", "No linear scarring", "Quick recovery"] },
+  { title: "DHI Hair Transplant", category: "Hair", desc: "Direct Hair Implantation using Choi pens for maximum graft survival and density.", benefits: ["No shaving required", "Higher density", "Faster healing", "Painless procedure"] },
+  { title: "PRP Therapy", category: "Regenerative", desc: "Platelet-Rich Plasma therapy harnesses your body&apos;s own growth factors to stimulate tissue repair and regeneration.", benefits: ["Natural healing", "Minimal downtime", "Stimulates collagen", "Non-surgical"] },
+  { title: "GFC Therapy", category: "Regenerative", desc: "Growth Factor Concentrate therapy delivers concentrated bioactive proteins for advanced cellular regeneration.", benefits: ["Higher potency than PRP", "Targeted treatment", "Rapid results", "Bio-identical"] },
+  { title: "Stem Cell Therapy", category: "Regenerative", desc: "Cutting-edge regenerative treatment using mesenchymal stem cells for tissue repair and anti-aging.", benefits: ["Tissue regeneration", "Anti-aging effects", "Long-lasting results", "Systemic benefits"] },
+  { title: "Morpheus MNRF", category: "Skin", desc: "Microneedling with radiofrequency energy to remodel collagen and tighten skin from within.", benefits: ["Skin tightening", "Scar reduction", "Pore refinement", "All skin types"] },
+  { title: "Exosome Therapy", category: "Regenerative", desc: "Nanoscale extracellular vesicles deliver growth factors and signaling molecules for deep cellular repair.", benefits: ["Deep cellular repair", "Anti-inflammatory", "Hair regrowth", "Skin rejuvenation"] },
+  { title: "Laser Rejuvenation", category: "Skin", desc: "Fractional laser technology resurfaces skin, reduces pigmentation, and stimulates collagen production.", benefits: ["Even skin tone", "Reduced pigmentation", "Collagen stimulation", "Smooth texture"] },
+  { title: "Botox", category: "Injectables", desc: "Premium neuromodulator treatments to soften dynamic wrinkles and prevent facial aging.", benefits: ["Wrinkle reduction", "Preventative aging", "Quick procedure", "Natural results"] },
+  { title: "Dermal Fillers", category: "Injectables", desc: "Hyaluronic acid fillers restore volume, contour facial features, and rejuvenate appearance.", benefits: ["Volume restoration", "Facial contouring", "Immediate results", "Reversible"] },
+  { title: "PDO Thread Lift", category: "Skin", desc: "Dissolvable PDO threads lift and tighten sagging skin while stimulating collagen production.", benefits: ["Instant lift", "Collagen stimulation", "Natural-looking", "Minimal downtime"] },
+  { title: "HIFU", category: "Skin", desc: "High-Intensity Focused Ultrasound lifts and tightens skin at the deep SMAS layer without incisions.", benefits: ["Non-invasive lift", "SMAS layer targeting", "Long-lasting", "No downtime"] },
+  { title: "Body Contouring", category: "Body", desc: "Non-surgical fat reduction and body sculpting using advanced energy-based technologies.", benefits: ["Fat reduction", "Skin tightening", "Body sculpting", "No surgery"] },
+  { title: "Double Chin Reduction", category: "Body", desc: "Targeted fat dissolution treatments for submental fat and jawline definition.", benefits: ["Jawline definition", "Permanent results", "Non-surgical", "Quick session"] },
+  { title: "Breast Lift", category: "Surgery", desc: "Surgical mastopexy to elevate and reshape sagging breasts for a more youthful contour.", benefits: ["Youthful contour", "Long-lasting", "Improved symmetry", "Enhanced confidence"] },
+  { title: "Laser Hair Reduction", category: "Skin", desc: "Permanent hair reduction using advanced diode and Nd:YAG laser systems for all skin types.", benefits: ["Permanent reduction", "All skin types", "Large areas", "Comfortable"] },
+  { title: "Sexual Wellness", category: "Wellness", desc: "Comprehensive treatments to enhance sexual health, vitality, and overall well-being.", benefits: ["Enhanced vitality", "Improved function", "Confidence boost", "Holistic approach"] },
+  { title: "IV Therapy", category: "Wellness", desc: "Intravenous nutrient infusions deliver vitamins, minerals, and antioxidants directly into the bloodstream.", benefits: ["Immediate absorption", "Customizable formulas", "Energy boost", "Immune support"] },
+  { title: "EECP", category: "Wellness", desc: "Enhanced External Counterpulsation improves circulation and cardiovascular health non-invasively.", benefits: ["Heart health", "Improved circulation", "Non-invasive", "No medication"] },
+  { title: "Chelation Therapy", category: "Wellness", desc: "Intravenous chelation removes heavy metals and toxins from the bloodstream for optimal health.", benefits: ["Detoxification", "Vascular health", "Mental clarity", "Anti-aging"] },
+  { title: "Ozone Therapy", category: "Wellness", desc: "Medical ozone therapy activates the immune system and improves oxygen utilization at cellular level.", benefits: ["Immune modulation", "Oxygenation", "Anti-microbial", "Cellular health"] },
+  { title: "Cosmetic Surgery", category: "Surgery", desc: "Comprehensive cosmetic surgical procedures performed by board-certified specialists in accredited facilities.", benefits: ["Transformative results", "Expert surgeons", "Safe environment", "Customized care"] },
+]
+
+const categories = ["All", "Hair", "Skin", "Injectables", "Body", "Regenerative", "Wellness", "Surgery"]
+
+const categoryGradients: Record<string, string> = {
+  Hair: "from-[#3A281E] to-[#241710]",
+  Skin: "from-[#2B1C15] to-[#3A281E]",
+  Injectables: "from-[#B78B5E] to-[#8E7C6E]",
+  Body: "from-[#3A281E] to-[#2B1C15]",
+  Regenerative: "from-[#D6B787] to-[#B78B5E]",
+  Wellness: "from-[#8E7C6E] to-[#3A281E]",
+  Surgery: "from-[#2B1C15] to-[#241710]",
+}
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.08 } },
+}
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" as const } },
+}
 
 export default function TreatmentsPage() {
+  const [activeCategory, setActiveCategory] = useState("All")
+
+  const filtered =
+    activeCategory === "All"
+      ? treatments
+      : treatments.filter((t) => t.category === activeCategory)
+
   return (
-    <>
-      <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 bg-[#2A1A12]">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(213,185,138,0.06),transparent_70%)]" />
-        <div className="container-custom px-6 relative z-10">
-          <SectionHeading title="Advanced Treatments" subtitle="Our Services" description="Hair Restoration · Skin Rejuvenation · Wellness · Anti-Aging" />
-        </div>
-      </section>
-
-      {treatmentCategories.map((category, catIndex) => (
-        <section key={category.title} className={`section-padding ${catIndex % 2 === 0 ? "bg-[#3C281D]" : "bg-[#2A1A12]"}`}>
-          <div className="container-custom px-6">
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="flex items-center gap-4 mb-10">
-              <div className="w-12 h-12 rounded-full bg-[rgba(213,185,138,0.1)] flex items-center justify-center">
-                <category.icon className="w-6 h-6 text-[#C8A96B]" />
-              </div>
-              <h2 className="font-heading text-3xl text-[#F5F0EA]">{category.title}</h2>
-            </motion.div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {category.treatments.map((treatment, i) => (
-                <motion.div key={treatment.slug} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
-                  whileHover={{ y: -5 }} className="group p-6 rounded-2xl border border-[rgba(213,185,138,0.1)] hover:border-[rgba(213,185,138,0.25)] bg-[#22160F] transition-all duration-500">
-                  <h3 className="font-heading text-xl text-[#F5F0EA] mb-3 group-hover:text-[#D5B98A] transition-all">{treatment.name}</h3>
-                  <p className="text-[#7D6B5A] text-sm mb-4 font-body">{treatment.description}</p>
-                  <Link href={`/treatments/${treatment.slug}`} className="text-[#D5B98A] text-xs font-button uppercase tracking-wider hover:text-[#C8A96B] transition-colors flex items-center gap-2">
-                    Learn More <ArrowRight className="w-3 h-3" />
-                  </Link>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-      ))}
-
-      <section className="py-20 bg-[#22160F] text-center">
-        <div className="container-custom px-6">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <h2 className="font-heading text-4xl text-[#F5F0EA] mb-4">Not Sure Which Treatment Is Right For You?</h2>
-            <p className="text-[#7D6B5A] mb-8 font-body">Schedule a complimentary consultation with Dr. Vikas Singh.</p>
-            <Button variant="primary" size="lg" asChild><Link href="/contact">Book Consultation</Link></Button>
+    <div className="min-h-screen bg-[#241710]">
+      <section className="relative h-[60vh] flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-[#3A281E]/60 to-[#241710]" />
+        <div className="absolute inset-0 bg-[url('/placeholder.svg?height=1080&width=1920')] bg-cover bg-center opacity-30" />
+        <div className="relative z-10 text-center px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          >
+            <Badge className="mb-4 bg-[#D6B787]/10 text-[#D6B787] border border-[#D6B787]/20 px-4 py-1.5 text-sm uppercase tracking-widest">
+              <Sparkles className="w-3.5 h-3.5 mr-2" />
+              Premium Aesthetics
+            </Badge>
+            <h1 className="text-5xl md:text-7xl font-light text-[#F6F0EA] mb-4 tracking-tight">
+              Our <span className="text-[#D6B787] font-normal">Treatments</span>
+            </h1>
+            <p className="text-lg md:text-xl text-[#E8DDD1]/80 max-w-xl mx-auto font-light">
+              Advanced aesthetic solutions tailored to you
+            </p>
           </motion.div>
         </div>
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#241710] to-transparent" />
       </section>
-    </>
-  );
+
+      <section className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-16 pb-24">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="flex flex-wrap gap-2 sm:gap-3 justify-center mb-16"
+        >
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setActiveCategory(cat)}
+              className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${
+                activeCategory === cat
+                  ? "bg-[#D6B787] text-[#241710] shadow-lg shadow-[#D6B787]/20"
+                  : "bg-[#3A281E]/60 text-[#E8DDD1]/70 border border-[#D6B787]/10 hover:bg-[#3A281E] hover:text-[#D6B787]"
+              }`}
+            >
+              {cat}
+            </button>
+          ))}
+        </motion.div>
+
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeCategory}
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            exit={{ opacity: 0, transition: { duration: 0.2 } }}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+          >
+            {filtered.map((treatment, i) => (
+              <motion.div
+                key={treatment.title}
+                variants={cardVariants}
+                layout
+                className="group relative rounded-2xl overflow-hidden border border-[rgba(214,183,135,0.25)] bg-[#3A281E]/40 backdrop-blur-sm hover:bg-[#3A281E]/60 transition-all duration-500"
+              >
+                <div
+                  className={`h-48 bg-gradient-to-br ${categoryGradients[treatment.category] || "from-[#3A281E] to-[#241710]"} relative overflow-hidden`}
+                >
+                  <div className="absolute inset-0 bg-[url('/placeholder.svg?height=400&width=600')] bg-cover bg-center opacity-20 group-hover:opacity-30 transition-opacity duration-500" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#3A281E]/80 to-transparent" />
+                  <div className="absolute top-4 left-4">
+                    <Badge className="bg-[#D6B787]/15 text-[#D6B787] border border-[#D6B787]/20 px-3 py-1 text-xs uppercase tracking-wider">
+                      {treatment.category}
+                    </Badge>
+                  </div>
+                  <div className="absolute bottom-4 left-4 right-4">
+                    <h3 className="text-xl font-medium text-[#F6F0EA]">{treatment.title}</h3>
+                  </div>
+                </div>
+                <div className="p-6 space-y-4">
+                  <p className="text-[#E8DDD1]/70 text-sm leading-relaxed">{treatment.desc}</p>
+                  <ul className="space-y-2">
+                    {treatment.benefits.map((b) => (
+                      <li key={b} className="flex items-center text-[#C5A067]/80 text-xs">
+                        <span className="w-1 h-1 rounded-full bg-[#D6B787] mr-2.5 flex-shrink-0" />
+                        {b}
+                      </li>
+                    ))}
+                  </ul>
+                  <Link
+                    href="#"
+                    className="inline-flex items-center gap-2 text-[#D6B787] text-sm font-medium group/link pt-2"
+                  >
+                    Learn More
+                    <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover/link:translate-x-1" />
+                  </Link>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </AnimatePresence>
+
+        {filtered.length === 0 && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-center py-20"
+          >
+            <p className="text-[#E8DDD1]/50 text-lg">No treatments found in this category.</p>
+          </motion.div>
+        )}
+      </section>
+    </div>
+  )
 }

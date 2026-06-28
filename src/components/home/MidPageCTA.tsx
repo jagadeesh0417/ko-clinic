@@ -3,27 +3,106 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Phone, MessageCircle, Calendar } from "lucide-react";
+import { Calendar, MessageCircle, Phone, ArrowRight } from "lucide-react";
 
-export function MidPageCTA() {
+const WhatsAppButton = () => {
+  const phoneNumber = "+1234567890";
+  const message = "Hi! I'd like to schedule a consultation.";
+  const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+
   return (
-    <section className="relative py-24 md:py-32 overflow-hidden bg-[#2A1A12]">
-      <div className="absolute inset-0 bg-gradient-to-r from-[rgba(213,185,138,0.04)] to-[rgba(34,22,15,0.8)]" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(213,185,138,0.08),transparent_70%)]" />
-      <div className="relative z-10 container-custom px-6 text-center">
-        <motion.h2 initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-          className="font-heading text-5xl md:text-7xl font-light text-[#F5F0EA] mb-4">
-          Ready To <span className="champagne-text">Transform?</span>
-        </motion.h2>
-        <motion.p initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }}
-          className="text-[#7D6B5A] text-lg md:text-xl font-body mb-8">
-          Schedule your complimentary consultation today.
-        </motion.p>
-        <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.4 }}
-          className="flex flex-wrap justify-center gap-4">
-          <Button variant="primary" size="lg" asChild><Link href="/contact"><Calendar className="w-4 h-4" /> Book Appointment</Link></Button>
-          <Button variant="outline" size="lg" asChild><a href="https://wa.me/919148717036" target="_blank" rel="noopener noreferrer"><MessageCircle className="w-4 h-4" /> WhatsApp Support</a></Button>
-          <Button variant="ghost" size="lg" asChild><a href="tel:+919148717036"><Phone className="w-4 h-4" /> Call Now</a></Button>
+    <Link href={whatsappUrl} target="_blank" rel="noopener noreferrer">
+      <Button
+        variant="outline"
+        className="w-full border-[#25D366] text-[#25D366] hover:bg-[#25D366] hover:text-white transition-all duration-300 text-sm sm:text-base h-12 px-6"
+      >
+        <MessageCircle className="mr-2 h-4 w-4" />
+        WhatsApp Support
+      </Button>
+    </Link>
+  );
+};
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, delay: i * 0.15, ease: "easeOut" as const },
+  }),
+};
+
+export default function MidPageCTA() {
+  return (
+    <section className="bg-[#2B1C15] section-padding relative overflow-hidden">
+      <div className="container mx-auto px-4">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          className="relative mx-auto max-w-4xl rounded-2xl border p-8 sm:p-12 md:p-16 text-center backdrop-blur-md"
+          style={{
+            background: "rgba(36, 23, 16, 0.75)",
+            borderColor: "rgba(214, 183, 135, 0.25)",
+          }}
+        >
+          <motion.div
+            variants={fadeUp}
+            custom={0}
+            className="mx-auto mb-6 h-0.5 w-16 rounded-full"
+            style={{ background: "linear-gradient(90deg, #D6B787, #C5A067, #B78B5E)" }}
+          />
+
+          <motion.h2
+            variants={fadeUp}
+            custom={1}
+            className="font-heading mb-4 text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight"
+            style={{ color: "#F6F0EA" }}
+          >
+            Ready to{" "}
+            <span style={{ color: "#D6B787" }}>Transform</span>?
+          </motion.h2>
+
+          <motion.p
+            variants={fadeUp}
+            custom={2}
+            className="mx-auto mb-10 max-w-2xl text-base sm:text-lg"
+            style={{ color: "#E8DDD1" }}
+          >
+            Schedule Your Complimentary Consultation Today
+          </motion.p>
+
+          <motion.div
+            variants={fadeUp}
+            custom={3}
+            className="flex flex-col items-center justify-center gap-4 sm:flex-row"
+          >
+            <Link href="/book-consultation">
+              <Button
+                className="group w-full sm:w-auto text-sm sm:text-base h-12 px-8 border-0 text-white transition-all duration-300 hover:brightness-110"
+                style={{
+                  background: "linear-gradient(135deg, #D6B787, #C5A067, #B78B5E)",
+                }}
+              >
+                <Calendar className="mr-2 h-4 w-4" />
+                Book Consultation
+                <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+              </Button>
+            </Link>
+
+            <WhatsAppButton />
+
+            <Link href="tel:+1234567890">
+              <Button
+                variant="ghost"
+                className="w-full sm:w-auto text-sm sm:text-base h-12 px-6 transition-all duration-300"
+                style={{ color: "#D6B787" }}
+              >
+                <Phone className="mr-2 h-4 w-4" />
+                Call Now
+              </Button>
+            </Link>
+          </motion.div>
         </motion.div>
       </div>
     </section>

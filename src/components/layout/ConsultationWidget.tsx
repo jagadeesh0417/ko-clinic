@@ -1,68 +1,96 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { X, Calendar } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import { useState } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import { X, Calendar, MessageCircle, Phone } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import Link from "next/link"
 
 export function ConsultationWidget() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false)
 
   return (
     <>
       <motion.button
-        initial={{ x: 100 }}
-        animate={{ x: 0 }}
-        transition={{ delay: 1.5, type: "spring" }}
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 left-6 z-50 bg-gradient-to-r from-[#C8A96B] to-[#B8905A] text-[#22160F] px-5 py-3 rounded-full text-xs font-button uppercase tracking-wider font-semibold shadow-lg hover:shadow-[rgba(200,169,107,0.2)] transition-all hover:translate-y-[-2px] flex items-center gap-2"
+        className="fixed bottom-6 left-6 z-50 flex items-center gap-2 rounded-full bg-gradient-to-r from-[#C5A067] to-[#B78B5E] px-6 py-3 font-button uppercase tracking-wider text-[#2B1C15] shadow-lg"
+        initial={{ x: -100, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ type: "spring", stiffness: 260, damping: 20 }}
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
       >
-        <Calendar className="w-4 h-4" />
+        <Calendar className="h-5 w-5" />
         Book Consultation
       </motion.button>
 
       <AnimatePresence>
         {isOpen && (
           <motion.div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
-            onClick={(e) => e.target === e.currentTarget && setIsOpen(false)}
+            onClick={() => setIsOpen(false)}
           >
             <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-[#3C281D] border border-[rgba(213,185,138,0.15)] p-8 max-w-md w-full rounded-2xl"
+              className="relative mx-4 w-full max-w-md rounded-2xl border border-white/20 bg-white/90 p-8 shadow-2xl backdrop-blur-xl"
+              initial={{ scale: 0.9, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 20 }}
+              transition={{ type: "spring", stiffness: 300, damping: 25 }}
+              onClick={(e) => e.stopPropagation()}
             >
-              <div className="flex items-center justify-between mb-6">
-                <h3 className="font-heading text-2xl text-[#F5F0EA]">
-                  Book Consultation
-                </h3>
-                <button onClick={() => setIsOpen(false)} className="text-[#7D6B5A] hover:text-[#F5F0EA]">
-                  <X className="w-5 h-5" />
-                </button>
-              </div>
-              <p className="text-[#7D6B5A] text-sm mb-6 font-body">
-                Schedule your complimentary consultation today.
+              <button
+                onClick={() => setIsOpen(false)}
+                className="absolute right-4 top-4 rounded-full p-1 text-gray-500 hover:text-gray-800"
+              >
+                <X className="h-5 w-5" />
+              </button>
+
+              <h3 className="mb-2 text-2xl font-semibold text-[#2B1C15]">
+                Book Consultation
+              </h3>
+              <p className="mb-6 text-sm text-gray-600">
+                Choose your preferred way to connect with us. We&apos;re here to help you take the first step toward better health.
               </p>
-              <div className="space-y-3">
-                <Button variant="primary" className="w-full" asChild>
-                  <Link href="/contact" onClick={() => setIsOpen(false)}>Book Appointment</Link>
-                </Button>
-                <Button variant="outline" className="w-full" asChild>
-                  <a href="https://wa.me/919148717036" target="_blank" rel="noopener noreferrer">WhatsApp Consultation</a>
-                </Button>
-                <Button variant="ghost" className="w-full" asChild>
-                  <a href="tel:+919148717036">Call Now</a>
-                </Button>
+
+              <div className="flex flex-col gap-3">
+                <Link href="/contact">
+                  <Button className="w-full rounded-full bg-gradient-to-r from-[#C5A067] to-[#B78B5E] py-6 font-button uppercase tracking-wider text-[#2B1C15] hover:opacity-90">
+                    <Calendar className="mr-2 h-4 w-4" />
+                    Book Appointment
+                  </Button>
+                </Link>
+
+                <a
+                  href="https://wa.me/919148717036"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Button
+                    variant="outline"
+                    className="w-full rounded-full border-[#25D366] py-6 font-button uppercase tracking-wider text-[#25D366] hover:bg-[#25D366] hover:text-white"
+                  >
+                    <MessageCircle className="mr-2 h-4 w-4" />
+                    WhatsApp Consultation
+                  </Button>
+                </a>
+
+                <a href="tel:+919148717036">
+                  <Button
+                    variant="outline"
+                    className="w-full rounded-full border-[#2B1C15] py-6 font-button uppercase tracking-wider text-[#2B1C15] hover:bg-[#2B1C15] hover:text-white"
+                  >
+                    <Phone className="mr-2 h-4 w-4" />
+                    Call Now
+                  </Button>
+                </a>
               </div>
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
     </>
-  );
+  )
 }

@@ -8,6 +8,7 @@ interface GlassCardProps {
   className?: string;
   delay?: number;
   hover?: boolean;
+  style?: React.CSSProperties;
 }
 
 export function GlassCard({
@@ -15,6 +16,7 @@ export function GlassCard({
   className,
   delay = 0,
   hover = true,
+  style,
 }: GlassCardProps) {
   return (
     <motion.div
@@ -28,6 +30,7 @@ export function GlassCard({
         hover && "hover:border-[rgba(213,185,138,0.25)] hover:shadow-xl hover:shadow-[rgba(34,22,15,0.3)]",
         className
       )}
+      style={style}
     >
       {children}
     </motion.div>

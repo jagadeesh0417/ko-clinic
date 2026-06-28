@@ -1,40 +1,77 @@
-"use client";
+"use client"
 
-import { motion } from "framer-motion";
-import { SectionHeading } from "@/components/ui/section-heading";
-import { GlassCard } from "@/components/ui/glass-card";
-import { Shield, FlaskConical, Leaf, Award, Star, Globe } from "lucide-react";
+import { SectionHeading } from "@/components/ui/section-heading"
+import { GlassCard } from "@/components/ui/glass-card"
+import { Globe, Microscope, Shield, Sparkles, Heart, Gem, Activity, Network } from "lucide-react"
 
-const reasons = [
-  { icon: Award, title: "International Expertise", description: "Globally recognized with 20+ years of clinical excellence across continents." },
-  { icon: FlaskConical, title: "Advanced Technology", description: "Cutting-edge equipment and signature combination techniques for superior outcomes." },
-  { icon: Leaf, title: "Natural Philosophy", description: "We enhance, not change. Every result honors your unique natural beauty." },
-  { icon: Shield, title: "US FDA Products", description: "Only approved products meeting rigorous international safety standards." },
-  { icon: Star, title: "Luxury Experience", description: "VIP treatment, private suites and concierge-level patient care." },
-  { icon: Globe, title: "Global Network", description: "International consultation network spanning 5+ countries worldwide." },
-];
+const features = [
+  {
+    icon: Globe,
+    title: "International Expertise",
+    description: "Globally trained specialists with world-class credentials",
+  },
+  {
+    icon: Microscope,
+    title: "Advanced Technology",
+    description: "State-of-the-art equipment and cutting-edge techniques",
+  },
+  {
+    icon: Shield,
+    title: "FDA Approved Products",
+    description: "Only the safest, clinically-proven products",
+  },
+  {
+    icon: Sparkles,
+    title: "Luxury Patient Journey",
+    description: "Premium care from consultation through recovery",
+  },
+  {
+    icon: Heart,
+    title: "Natural Enhancement",
+    description: "Artful results that enhance your natural beauty",
+  },
+  {
+    icon: Gem,
+    title: "Combination Techniques",
+    description: "Synergistic treatments for optimal outcomes",
+  },
+  {
+    icon: Activity,
+    title: "Regenerative Medicine",
+    description: "Harnessing your body's healing potential",
+  },
+  {
+    icon: Network,
+    title: "Global Network",
+    description: "Consultations across India and international locations",
+  },
+]
 
 export function WhyChooseUs() {
   return (
-    <section className="section-padding bg-[#2A1A12]">
-      <div className="container-custom">
+    <section className="relative py-24 bg-[#3A281E]">
+      <div className="container mx-auto px-4">
         <SectionHeading
-          title="Why Choose KO Clinic"
-          subtitle="Excellence"
-          description="Where science meets art — a perfect blend of innovation and luxury"
+          title="Why Choose KO CLINIC"
+          subtitle="Where Science Meets Art"
         />
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-16">
-          {reasons.map(({ icon: Icon, title, description }, i) => (
-            <GlassCard key={title} delay={i * 0.1}>
-              <div className="w-12 h-12 rounded-full bg-[rgba(213,185,138,0.1)] flex items-center justify-center mb-4">
-                <Icon className="w-6 h-6 text-[#C8A96B]" />
-              </div>
-              <h3 className="font-heading text-xl text-[#F5F0EA] mb-2">{title}</h3>
-              <p className="text-[#7D6B5A] text-sm leading-relaxed font-body">{description}</p>
-            </GlassCard>
-          ))}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-16">
+          {features.map((feature, index) => {
+            const Icon = feature.icon
+            return (
+              <GlassCard key={index} delay={index * 0.1} className="flex flex-col items-start text-left">
+                <Icon className="w-10 h-10 text-[#D6B787] mb-4" />
+                <h3 className="text-lg font-semibold text-[#F6F0EA] mb-2">
+                  {feature.title}
+                </h3>
+                <p className="text-sm text-[#8E7C6E] leading-relaxed">
+                  {feature.description}
+                </p>
+              </GlassCard>
+            )
+          })}
         </div>
       </div>
     </section>
-  );
+  )
 }

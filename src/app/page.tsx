@@ -2,9 +2,11 @@ import { Hero } from "@/components/home/Hero";
 import { Introduction } from "@/components/home/Introduction";
 import { AboutDoctor } from "@/components/home/AboutDoctor";
 import { WhyChooseUs } from "@/components/home/WhyChooseUs";
-import { ConditionsWeTreat } from "@/components/home/ConditionsWeTreat";
+import ConditionsWeTreat from "@/components/home/ConditionsWeTreat";
 import { FeaturedTreatments } from "@/components/home/FeaturedTreatments";
-import { MidPageCTA } from "@/components/home/MidPageCTA";
+import { DoctorSection } from "@/components/home/DoctorSection";
+import { BeforeAfterSlider } from "@/components/home/BeforeAfterSlider";
+import MidPageCTA from "@/components/home/MidPageCTA";
 import { Testimonials } from "@/components/home/Testimonials";
 import { VideoLibrary } from "@/components/home/VideoLibrary";
 import { InstagramSection } from "@/components/home/InstagramSection";
@@ -21,6 +23,8 @@ export default function Home() {
       <WhyChooseUs />
       <ConditionsWeTreat />
       <FeaturedTreatments />
+      <DoctorSection />
+      <BeforeAfterSlider />
       <MidPageCTA />
       <Testimonials />
       <VideoLibrary />

@@ -1,80 +1,175 @@
-"use client";
+"use client"
 
-import Link from "next/link";
-import { motion } from "framer-motion";
-import { Phone, Mail, MapPin, Camera, Globe, Share2, Video } from "lucide-react";
-import { Separator } from "@/components/ui/separator";
+import Link from "next/link"
+import { motion } from "framer-motion"
+import { Phone, Mail, Clock, Globe, MessageCircle, Video, ArrowRight } from "lucide-react"
 
 const quickLinks = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   { label: "Treatments", href: "/treatments" },
   { label: "Gallery", href: "/gallery" },
-  { label: "Before & After", href: "/before-after" },
-  { label: "Locations", href: "/locations" },
+  { label: "Media", href: "/media" },
   { label: "Blog", href: "/blog" },
   { label: "Contact", href: "/contact" },
-];
+]
 
-const treatments = [
-  { label: "Micro Bio-FUE", href: "/treatments/micro-bio-fue" },
-  { label: "Morpheus MNRF", href: "/treatments/morpheus-mnrf" },
-  { label: "Botox & Fillers", href: "/treatments/botox-fillers" },
-  { label: "PRP Therapy", href: "/treatments/prp-gfc-therapy" },
-  { label: "Exosome Therapy", href: "/treatments/exosome-therapy" },
-  { label: "Thread Lift", href: "/treatments/pdo-thread-lift" },
-];
+const procedures = [
+  { label: "Hair Transplant", href: "/treatments/hair-transplant" },
+  { label: "PRP Therapy", href: "/treatments/prp-therapy" },
+  { label: "Botox", href: "/treatments/botox" },
+  { label: "Fillers", href: "/treatments/fillers" },
+  { label: "Thread Lift", href: "/treatments/thread-lift" },
+  { label: "Laser", href: "/treatments/laser" },
+  { label: "Body Contouring", href: "/treatments/body-contouring" },
+]
+
+const stagger = {
+  hidden: { opacity: 0, y: 30 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: i * 0.06, duration: 0.5, ease: "easeOut" as const },
+  }),
+}
 
 export function Footer() {
   return (
-    <footer className="bg-[#22160F] border-t border-[rgba(213,185,138,0.08)]">
-      <div className="container-custom px-6 py-16 md:py-24">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+    <footer
+      style={{
+        backgroundColor: "#2B1C15",
+        color: "#F6F0EA",
+        padding: "80px 0 0",
+      }}
+    >
+      <div
+        style={{
+          maxWidth: 1280,
+          margin: "0 auto",
+          padding: "0 24px",
+        }}
+      >
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(4, 1fr)",
+            gap: 48,
+          }}
+        >
+          {/* Column 1 - Brand */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            custom={0}
+            initial="hidden"
+            whileInView="visible"
             viewport={{ once: true }}
+            variants={stagger}
           >
-            <h3 className="font-heading text-3xl text-[#F5F0EA] mb-4">
-              KO <span className="champagne-text">CLINIC</span>
-            </h3>
-            <p className="text-[#7D6B5A] text-sm leading-relaxed mb-6 font-body">
-              A premium global aesthetics brand dedicated to enhancing natural beauty through science, precision and innovation.
+            <Link href="/" style={{ textDecoration: "none" }}>
+              <h2
+                style={{
+                  fontSize: 28,
+                  fontWeight: 700,
+                  letterSpacing: "0.15em",
+                  color: "#D6B787",
+                  margin: "0 0 6px",
+                }}
+              >
+                KO
+                <span style={{ color: "#C5A067" }}> CLINIC</span>
+              </h2>
+            </Link>
+            <p
+              style={{
+                color: "#8E7C6E",
+                fontSize: 14,
+                lineHeight: 1.7,
+                margin: "0 0 24px",
+              }}
+            >
+              Redefining luxury aesthetics with precision, artistry, and
+              world-class care. Your journey to timeless beauty begins here.
             </p>
-            <div className="flex gap-4">
+            <div style={{ display: "flex", gap: 12 }}>
               {[
-                { icon: Camera, href: "#" },
-                { icon: Globe, href: "#" },
-                { icon: Share2, href: "#" },
-                { icon: Video, href: "#" },
-              ].map(({ icon: Icon, href }, i) => (
-                <a
-                  key={i}
-                  href={href}
-                  className="w-10 h-10 rounded-full border border-[rgba(213,185,138,0.15)] flex items-center justify-center text-[#7D6B5A] hover:text-[#D5B98A] hover:border-[#D5B98A] transition-all"
+                { icon: Globe, label: "Website" },
+                { icon: MessageCircle, label: "WhatsApp" },
+                { icon: Video, label: "Video" },
+              ].map(({ icon: Icon, label }) => (
+                <motion.a
+                  key={label}
+                  href="#"
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                  aria-label={label}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    width: 42,
+                    height: 42,
+                    borderRadius: "50%",
+                    border: "1px solid rgba(214,183,135,0.25)",
+                    color: "#D6B787",
+                    textDecoration: "none",
+                    transition: "all 0.3s ease",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = "#D6B787"
+                    e.currentTarget.style.color = "#2B1C15"
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = "transparent"
+                    e.currentTarget.style.color = "#D6B787"
+                  }}
                 >
-                  <Icon className="w-4 h-4" />
-                </a>
+                  <Icon size={18} />
+                </motion.a>
               ))}
             </div>
           </motion.div>
 
+          {/* Column 2 - Quick Links */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            custom={1}
+            initial="hidden"
+            whileInView="visible"
             viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
+            variants={stagger}
           >
-            <h4 className="font-button text-xs uppercase tracking-[3px] text-[#D5B98A] mb-6">
+            <h3
+              style={{
+                fontSize: 16,
+                fontWeight: 600,
+                letterSpacing: "0.1em",
+                color: "#D6B787",
+                margin: "0 0 24px",
+                textTransform: "uppercase",
+              }}
+            >
               Quick Links
-            </h4>
-            <ul className="space-y-3">
+            </h3>
+            <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
               {quickLinks.map((link) => (
-                <li key={link.href}>
+                <li key={link.label} style={{ marginBottom: 14 }}>
                   <Link
                     href={link.href}
-                    className="text-[#7D6B5A] hover:text-[#F5F0EA] text-sm transition-colors font-body"
+                    style={{
+                      color: "#E8DDD1",
+                      textDecoration: "none",
+                      fontSize: 14,
+                      transition: "color 0.3s ease",
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: 6,
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.color = "#D6B787"
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.color = "#E8DDD1"
+                    }}
                   >
+                    <ArrowRight size={12} style={{ color: "#C5A067" }} />
                     {link.label}
                   </Link>
                 </li>
@@ -82,83 +177,202 @@ export function Footer() {
             </ul>
           </motion.div>
 
+          {/* Column 3 - Popular Procedures */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            custom={2}
+            initial="hidden"
+            whileInView="visible"
             viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
+            variants={stagger}
           >
-            <h4 className="font-button text-xs uppercase tracking-[3px] text-[#D5B98A] mb-6">
-              Treatments
-            </h4>
-            <ul className="space-y-3">
-              {treatments.map((link) => (
-                <li key={link.href}>
+            <h3
+              style={{
+                fontSize: 16,
+                fontWeight: 600,
+                letterSpacing: "0.1em",
+                color: "#D6B787",
+                margin: "0 0 24px",
+                textTransform: "uppercase",
+              }}
+            >
+              Popular Procedures
+            </h3>
+            <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+              {procedures.map((item) => (
+                <li key={item.label} style={{ marginBottom: 14 }}>
                   <Link
-                    href={link.href}
-                    className="text-[#7D6B5A] hover:text-[#F5F0EA] text-sm transition-colors font-body"
+                    href={item.href}
+                    style={{
+                      color: "#E8DDD1",
+                      textDecoration: "none",
+                      fontSize: 14,
+                      transition: "color 0.3s ease",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.color = "#D6B787"
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.color = "#E8DDD1"
+                    }}
                   >
-                    {link.label}
+                    {item.label}
                   </Link>
                 </li>
               ))}
             </ul>
           </motion.div>
 
+          {/* Column 4 - Contact */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            custom={3}
+            initial="hidden"
+            whileInView="visible"
             viewport={{ once: true }}
-            transition={{ delay: 0.3 }}
+            variants={stagger}
           >
-            <h4 className="font-button text-xs uppercase tracking-[3px] text-[#D5B98A] mb-6">
+            <h3
+              style={{
+                fontSize: 16,
+                fontWeight: 600,
+                letterSpacing: "0.1em",
+                color: "#D6B787",
+                margin: "0 0 24px",
+                textTransform: "uppercase",
+              }}
+            >
               Contact
-            </h4>
-            <ul className="space-y-4">
-              <li>
-                <a href="mailto:drvikas090909@gmail.com" className="flex items-center gap-3 text-[#7D6B5A] hover:text-[#F5F0EA] text-sm transition-colors">
-                  <Mail className="w-4 h-4 text-[#C8A96B]" />
+            </h3>
+            <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+              <div style={{ display: "flex", alignItems: "flex-start", gap: 12 }}>
+                <Phone size={16} style={{ color: "#C5A067", marginTop: 3, flexShrink: 0 }} />
+                <div>
+                  <p style={{ margin: 0, fontSize: 12, color: "#8E7C6E" }}>India</p>
+                  <a
+                    href="tel:+919148717036"
+                    style={{
+                      color: "#E8DDD1",
+                      textDecoration: "none",
+                      fontSize: 14,
+                      transition: "color 0.3s ease",
+                    }}
+                    onMouseEnter={(e) => { e.currentTarget.style.color = "#D6B787" }}
+                    onMouseLeave={(e) => { e.currentTarget.style.color = "#E8DDD1" }}
+                  >
+                    +91 9148717036
+                  </a>
+                </div>
+              </div>
+              <div style={{ display: "flex", alignItems: "flex-start", gap: 12 }}>
+                <Phone size={16} style={{ color: "#C5A067", marginTop: 3, flexShrink: 0 }} />
+                <div>
+                  <p style={{ margin: 0, fontSize: 12, color: "#8E7C6E" }}>Hong Kong</p>
+                  <a
+                    href="tel:+85244608658"
+                    style={{
+                      color: "#E8DDD1",
+                      textDecoration: "none",
+                      fontSize: 14,
+                      transition: "color 0.3s ease",
+                    }}
+                    onMouseEnter={(e) => { e.currentTarget.style.color = "#D6B787" }}
+                    onMouseLeave={(e) => { e.currentTarget.style.color = "#E8DDD1" }}
+                  >
+                    +852 44608658
+                  </a>
+                </div>
+              </div>
+              <div style={{ display: "flex", alignItems: "flex-start", gap: 12 }}>
+                <Phone size={16} style={{ color: "#C5A067", marginTop: 3, flexShrink: 0 }} />
+                <div>
+                  <p style={{ margin: 0, fontSize: 12, color: "#8E7C6E" }}>Philippines</p>
+                  <a
+                    href="tel:+639661688381"
+                    style={{
+                      color: "#E8DDD1",
+                      textDecoration: "none",
+                      fontSize: 14,
+                      transition: "color 0.3s ease",
+                    }}
+                    onMouseEnter={(e) => { e.currentTarget.style.color = "#D6B787" }}
+                    onMouseLeave={(e) => { e.currentTarget.style.color = "#E8DDD1" }}
+                  >
+                    +63 9661688381
+                  </a>
+                </div>
+              </div>
+              <div style={{ display: "flex", alignItems: "flex-start", gap: 12 }}>
+                <Mail size={16} style={{ color: "#C5A067", marginTop: 3, flexShrink: 0 }} />
+                <a
+                  href="mailto:drvikas090909@gmail.com"
+                  style={{
+                    color: "#E8DDD1",
+                    textDecoration: "none",
+                    fontSize: 14,
+                    transition: "color 0.3s ease",
+                  }}
+                  onMouseEnter={(e) => { e.currentTarget.style.color = "#D6B787" }}
+                  onMouseLeave={(e) => { e.currentTarget.style.color = "#E8DDD1" }}
+                >
                   drvikas090909@gmail.com
                 </a>
-              </li>
-              <li>
-                <a href="tel:+919148717036" className="flex items-center gap-3 text-[#7D6B5A] hover:text-[#F5F0EA] text-sm transition-colors">
-                  <Phone className="w-4 h-4 text-[#C8A96B]" />
-                  +91 9148717036
-                </a>
-              </li>
-              <li>
-                <div className="flex items-start gap-3 text-[#7D6B5A] text-sm">
-                  <MapPin className="w-4 h-4 text-[#C8A96B] mt-0.5" />
-                  <span>Koramangala, Bengaluru</span>
+              </div>
+              <div style={{ display: "flex", alignItems: "flex-start", gap: 12 }}>
+                <Clock size={16} style={{ color: "#C5A067", marginTop: 3, flexShrink: 0 }} />
+                <div>
+                  <p style={{ margin: 0, fontSize: 12, color: "#8E7C6E" }}>Hours</p>
+                  <p style={{ margin: 0, color: "#E8DDD1", fontSize: 14 }}>
+                    Mon-Sat 10AM - 7PM
+                  </p>
                 </div>
-              </li>
-            </ul>
-            <div className="mt-6 space-y-2">
-              {[
-                { label: "Privacy Policy", href: "/privacy-policy" },
-                { label: "Terms & Conditions", href: "/terms" },
-                { label: "Disclaimer", href: "/disclaimer" },
-              ].map((link) => (
-                <Link key={link.href} href={link.href} className="block text-xs text-[#7D6B5A] hover:text-[#D5B98A] transition-colors font-body">
-                  {link.label}
-                </Link>
-              ))}
+              </div>
             </div>
           </motion.div>
         </div>
 
-        <Separator className="my-8 bg-[rgba(213,185,138,0.1)]" />
+        {/* Luxury Divider */}
+        <div
+          style={{
+            height: 1,
+            background:
+              "linear-gradient(90deg, transparent, rgba(214,183,135,0.25), transparent)",
+            margin: "60px 0 0",
+          }}
+        />
 
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-[#7D6B5A] text-xs font-body">
-            &copy; {new Date().getFullYear()} KO Clinic by Kosmedixx. All Rights Reserved.
+        {/* Bottom Bar */}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            padding: "24px 0",
+            flexWrap: "wrap",
+            gap: 8,
+          }}
+        >
+          <p
+            style={{
+              margin: 0,
+              fontSize: 13,
+              color: "#8E7C6E",
+            }}
+          >
+            &copy; 2026 KO CLINIC by Kosmedixx. All Rights Reserved.
           </p>
-          <p className="text-[#7D6B5A] text-xs font-body">
-            Designed & Developed by <span className="text-[#C8A96B]">Crawlers Technologies</span>
+          <p
+            style={{
+              margin: 0,
+              fontSize: 13,
+              color: "#8E7C6E",
+            }}
+          >
+            Designed and Developed by{" "}
+            <span style={{ color: "#D6B787", transition: "color 0.3s ease" }}>
+              Crawlers Technologies
+            </span>
           </p>
         </div>
       </div>
     </footer>
-  );
+  )
 }

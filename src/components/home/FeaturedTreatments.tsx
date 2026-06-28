@@ -2,86 +2,131 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Badge } from "@/components/ui/badge";
-import { ArrowRight, Syringe, Sparkles, Activity, Eye, Droplets, Heart } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { ArrowRight, Sparkles } from "lucide-react";
 
 const treatments = [
   {
-    icon: Activity, title: "Micro Bio-FUE Hair Transplant", description: "Permanent hair restoration with maximum density and accelerated growth.",
-    targets: ["Norwood I-VII", "Maximum Density", "Permanent Results"], slug: "micro-bio-fue",
+    title: "Micro Bio-FUE Hair Transplant",
+    category: "Hair Restoration",
+    description: "Advanced follicular unit extraction for permanent, natural-looking hair restoration with minimal downtime.",
+    initials: "MB",
+    slug: "micro-bio-fue",
   },
   {
-    icon: Syringe, title: "PRP & GFC Hair Therapy", description: "Regenerative hair restoration for thinning hair and active follicle stimulation.",
-    targets: ["Hair Thinning", "Follicle Activation", "Non-Surgical"], slug: "prp-gfc-therapy",
+    title: "DHI Hair Transplant",
+    category: "Hair Restoration",
+    description: "Direct hair implantation technique providing maximum density and natural results with rapid recovery.",
+    initials: "DH",
+    slug: "dhi-hair-transplant",
   },
   {
-    icon: Sparkles, title: "Morpheus MNRF", description: "Microneedling RF for acne scars, texture improvement, and skin tightening.",
-    targets: ["Acne Scars", "Texture", "Tightening"], slug: "morpheus-mnrf",
+    title: "PRP Therapy",
+    category: "Regenerative",
+    description: "Platelet-rich plasma therapy to stimulate hair growth, collagen production, and cellular regeneration.",
+    initials: "PR",
+    slug: "prp-therapy",
   },
   {
-    icon: Droplets, title: "Exosome Therapy", description: "Stem cell derived regenerative treatment for deep collagen stimulation.",
-    targets: ["Collagen", "Pigmentation", "Cellular Repair"], slug: "exosome-therapy",
+    title: "Morpheus MNRF",
+    category: "Skin",
+    description: "Microneedling with radiofrequency for deep collagen remodeling, skin tightening, and scar revision.",
+    initials: "MM",
+    slug: "morpheus-mnrf",
   },
   {
-    icon: Eye, title: "Botox & Fillers", description: "Wrinkle reduction, volume restoration, and facial contouring with premium products.",
-    targets: ["Wrinkles", "Volume Loss", "Contouring"], slug: "botox-fillers",
+    title: "Botox",
+    category: "Injectables",
+    description: "Premium neurotoxin treatments for wrinkle reduction, brow lifting, and facial rejuvenation.",
+    initials: "BX",
+    slug: "botox",
   },
   {
-    icon: Activity, title: "PDO Thread Lift", description: "Instant lifting, jawline contouring and facial tightening without surgery.",
-    targets: ["Instant Lift", "Jawline", "Tightening"], slug: "pdo-thread-lift",
+    title: "PDO Thread Lift",
+    category: "Skin",
+    description: "Non-surgical lifting and tightening using absorbable threads for immediate, natural-looking results.",
+    initials: "PT",
+    slug: "pdo-thread-lift",
   },
 ];
 
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.1 },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] as const },
+  },
+};
+
 export function FeaturedTreatments() {
   return (
-    <section className="section-padding bg-[#2A1A12]">
+    <section className="bg-[#241710] section-padding">
       <div className="container-custom">
         <SectionHeading
-          title="Advanced Treatments Tailored For You"
-          subtitle="Our Services"
-          description="Hair Restoration · Skin Rejuvenation · Wellness · Anti-Aging"
+          title="Featured Treatments"
+          subtitle="Our Expertise"
+          description="Hair Restoration · Skin Rejuvenation · Regenerative · Injectables"
         />
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-16">
-          {treatments.map((treatment, i) => (
+        <motion.div
+          className="grid grid-cols-2 md:grid-cols-3 gap-6 mt-16"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+        >
+          {treatments.map((treatment) => (
             <motion.div
               key={treatment.slug}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-              whileHover={{ y: -8, transition: { duration: 0.3 } }}
-              className="group relative overflow-hidden rounded-2xl border border-[rgba(213,185,138,0.1)] bg-[#22160F] hover:border-[rgba(213,185,138,0.25)] transition-all duration-500"
+              variants={cardVariants}
+              className="group glassmorphism rounded-2xl overflow-hidden transition-all duration-500 hover:border-[rgba(214,183,135,0.25)]"
             >
-              <div className="relative p-6 md:p-8">
-                <div className="w-12 h-12 rounded-full bg-[rgba(213,185,138,0.08)] flex items-center justify-center mb-4">
-                  <treatment.icon className="w-6 h-6 text-[#C8A96B]" />
-                </div>
-                <h3 className="font-heading text-xl text-[#F5F0EA] mb-2 group-hover:text-[#D5B98A] transition-all">
+              <div className="relative h-40 bg-gradient-to-br from-[#C5A067] via-[#D6B787] to-[#B78B5E] flex items-center justify-center overflow-hidden">
+                <span className="text-[#2B1C15] text-4xl md:text-5xl font-bold tracking-tight opacity-30 select-none">
+                  {treatment.initials}
+                </span>
+                <Sparkles className="absolute top-3 right-3 w-5 h-5 text-[#F6F0EA]/40" />
+              </div>
+              <div className="p-5 md:p-6 bg-[#3A281E]/80 backdrop-blur-sm">
+                <Badge variant="gold" className="mb-3 text-[10px] px-2.5 py-0.5">
+                  {treatment.category}
+                </Badge>
+                <h3 className="font-heading text-base md:text-lg text-[#F6F0EA] mb-2 group-hover:text-[#D6B787] transition-colors leading-snug">
                   {treatment.title}
                 </h3>
-                <p className="text-[#7D6B5A] text-sm mb-4 font-body">{treatment.description}</p>
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {treatment.targets.map((target) => (
-                    <Badge key={target} variant="secondary" className="text-xs">{target}</Badge>
-                  ))}
-                </div>
-                <div className="flex items-center justify-between">
-                  <Link href={`/treatments/${treatment.slug}`} className="text-[#D5B98A] text-sm font-button uppercase tracking-wider hover:text-[#C8A96B] transition-colors flex items-center gap-2">
-                    Learn More <ArrowRight className="w-3 h-3" />
-                  </Link>
-                  <Link href="/contact" className="text-[#7D6B5A] text-xs font-button uppercase tracking-wider hover:text-[#F5F0EA] transition-colors">
-                    Book Now
-                  </Link>
-                </div>
+                <p className="text-[#8E7C6E] text-sm leading-relaxed mb-4 font-body">
+                  {treatment.description}
+                </p>
+                <Link
+                  href={`/treatments/${treatment.slug}`}
+                  className="inline-flex items-center gap-2 text-[#C5A067] text-xs uppercase tracking-[0.15em] font-medium hover:text-[#D6B787] transition-colors"
+                >
+                  Learn More <ArrowRight className="w-3 h-3" />
+                </Link>
               </div>
             </motion.div>
           ))}
-        </div>
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mt-12">
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.6 }}
+          className="text-center mt-12"
+        >
           <Button variant="outline" asChild>
-            <Link href="/treatments">View All Treatments <ArrowRight className="w-4 h-4" /></Link>
+            <Link href="/treatments">
+              View All Treatments <ArrowRight className="w-4 h-4 ml-2" />
+            </Link>
           </Button>
         </motion.div>
       </div>

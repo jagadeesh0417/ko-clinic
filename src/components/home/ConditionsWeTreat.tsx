@@ -3,7 +3,6 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { SectionHeading } from "@/components/ui/section-heading";
-import { GlassCard } from "@/components/ui/glass-card";
 import { ArrowRight } from "lucide-react";
 
 const conditions = [
@@ -25,36 +24,53 @@ const conditions = [
   { name: "Jawline Definition", slug: "jawline-definition" },
 ];
 
-export function ConditionsWeTreat() {
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.05 },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: "easeOut" as const },
+  },
+};
+
+export default function ConditionsWeTreat() {
   return (
-    <section className="section-padding bg-[#3C281D]">
+    <section className="bg-[#3A281E] section-padding">
       <div className="container-custom">
         <SectionHeading
           title="Conditions We Treat"
-          subtitle="Expertise"
-          description="Advanced solutions for every aesthetic concern"
+          subtitle="Advanced aesthetic solutions tailored to your unique concerns"
         />
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4 mt-16">
-          {conditions.map((condition, i) => (
-            <motion.div
-              key={condition.slug}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.03 }}
-            >
+
+        <motion.div
+          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+        >
+          {conditions.map((condition) => (
+            <motion.div key={condition.slug} variants={itemVariants}>
               <Link
                 href={`/treatments?condition=${condition.slug}`}
-                className="group block glassmorphism rounded-2xl p-4 text-center hover:border-[rgba(213,185,138,0.3)] transition-all duration-300"
+                className="glassmorphism block rounded-xl px-4 py-5 text-center transition-all duration-300 hover:border-[rgba(214,183,135,0.5)] group"
+                style={{ borderColor: "rgba(214,183,135,0.25)" }}
               >
-                <p className="font-heading text-lg text-[#F5F0EA] group-hover:text-[#D5B98A] transition-colors">
+                <span className="block text-[#D6B787] font-medium text-sm sm:text-base leading-snug group-hover:text-[#C5A067] transition-colors">
                   {condition.name}
-                </p>
-                <ArrowRight className="w-3 h-3 text-[#7D6B5A] group-hover:text-[#D5B98A] mx-auto mt-2 transition-colors" />
+                </span>
+                <ArrowRight className="mx-auto mt-2 h-4 w-4 text-[#8E7C6E] group-hover:text-[#B78B5E] transition-colors" />
               </Link>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

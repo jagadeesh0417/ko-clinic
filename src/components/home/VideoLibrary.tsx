@@ -1,59 +1,134 @@
-"use client";
+"use client"
 
-import { motion } from "framer-motion";
-import { SectionHeading } from "@/components/ui/section-heading";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Play, ArrowRight } from "lucide-react";
-import Link from "next/link";
+import { motion } from "framer-motion"
+import { SectionHeading } from "@/components/ui/section-heading"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Play, ArrowRight } from "lucide-react"
+import Link from "next/link"
 
 const videos = [
-  { title: "Hair Transplant Overview", category: "Hair Restoration", duration: "4:32" },
-  { title: "PRP Therapy Explained", category: "Skin", duration: "3:15" },
-  { title: "Botox Treatment Session", category: "Injectable", duration: "5:20" },
-  { title: "Patient Success Story", category: "Transformations", duration: "6:45" },
-  { title: "Laser Rejuvenation", category: "Skin", duration: "4:10" },
-  { title: "Dr. Vikas Interview", category: "Stories", duration: "8:30" },
-];
+  {
+    title: "Laser Skin Resurfacing: What to Expect",
+    category: "Treatments",
+    duration: "4:32",
+    gradient: "from-[#D6B787] to-[#B78B5E]",
+  },
+  {
+    title: "Our State-of-the-Art Facility Tour",
+    category: "Clinic Tour",
+    duration: "3:15",
+    gradient: "from-[#C5A067] to-[#8E7C6E]",
+  },
+  {
+    title: "Patient Journey: Before & After Results",
+    category: "Testimonials",
+    duration: "5:48",
+    gradient: "from-[#D6B787] to-[#C5A067]",
+  },
+  {
+    title: "Advanced Injectable Techniques Explained",
+    category: "Procedures",
+    duration: "6:10",
+    gradient: "from-[#B78B5E] to-[#8E7C6E]",
+  },
+  {
+    title: "Skincare Routine Tips from Our Experts",
+    category: "Skincare",
+    duration: "3:55",
+    gradient: "from-[#C5A067] to-[#B78B5E]",
+  },
+  {
+    title: "Meet the KO Clinic Medical Team",
+    category: "About Us",
+    duration: "4:05",
+    gradient: "from-[#D6B787] to-[#8E7C6E]",
+  },
+]
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1 },
+  },
+}
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: "easeOut" as const },
+  },
+}
 
 export function VideoLibrary() {
   return (
-    <section className="section-padding bg-[#3C281D]">
-      <div className="container-custom">
+    <section className="bg-[#3A281E] section-padding">
+      <div className="container mx-auto px-4">
         <SectionHeading
           title="Video Library"
-          subtitle="Watch"
-          description="Educational content and procedure insights"
+          subtitle="Watch our procedures, patient stories, and expert insights"
         />
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-16">
-          {videos.map((video, i) => (
+
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+        >
+          {videos.map((video, index) => (
             <motion.div
-              key={video.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.05 }}
-              className="group cursor-pointer"
+              key={index}
+              className="group relative rounded-lg overflow-hidden cursor-pointer"
+              variants={cardVariants}
             >
-              <div className="aspect-video rounded-2xl bg-gradient-to-br from-[rgba(213,185,138,0.08)] to-[rgba(34,22,15,0.8)] border border-[rgba(213,185,138,0.1)] hover:border-[rgba(213,185,138,0.3)] transition-all duration-500 flex items-center justify-center relative overflow-hidden">
-                <motion.div whileHover={{ scale: 1.1 }} className="w-16 h-16 rounded-full border-2 border-[#C8A96B] flex items-center justify-center group-hover:bg-[#C8A96B] transition-all duration-300">
-                  <Play className="w-6 h-6 text-[#C8A96B] group-hover:text-[#22160F] transition-colors ml-0.5" />
-                </motion.div>
-                <span className="absolute bottom-3 right-3 text-xs text-[#7D6B5A] bg-[rgba(34,22,15,0.8)] px-2 py-1 rounded-full font-body">{video.duration}</span>
+              <div
+                className={`relative w-full aspect-video bg-gradient-to-br ${video.gradient} flex items-center justify-center`}
+              >
+                <div className="absolute inset-0 bg-[#241710]/40 group-hover:bg-[#241710]/60 transition-colors duration-300" />
+                <div className="relative z-10 w-16 h-16 rounded-full bg-[#D6B787]/90 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                  <Play className="w-6 h-6 text-[#241710] ml-0.5" fill="#241710" />
+                </div>
+                <span className="absolute bottom-3 right-3 z-10 bg-[#241710]/80 text-[#F6F0EA] text-xs px-2 py-1 rounded font-mono">
+                  {video.duration}
+                </span>
               </div>
-              <div className="mt-3">
-                <Badge variant="secondary" className="mb-2">{video.category}</Badge>
-                <h3 className="font-heading text-lg text-[#F5F0EA] group-hover:text-[#D5B98A] transition-all">{video.title}</h3>
+              <div className="p-4 bg-[#2B1C15]">
+                <Badge
+                  variant="outline"
+                  className="border-[rgba(214,183,135,0.25)] text-[#D6B787] text-xs mb-2"
+                >
+                  {video.category}
+                </Badge>
+                <h3 className="text-[#F6F0EA] font-semibold text-sm leading-snug line-clamp-2">
+                  {video.title}
+                </h3>
               </div>
             </motion.div>
           ))}
-        </div>
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mt-12">
-          <Button variant="outline" asChild>
-            <Link href="/media">View More Videos <ArrowRight className="w-4 h-4" /></Link>
-          </Button>
+        </motion.div>
+
+        <motion.div
+          className="flex justify-center mt-12"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.3, duration: 0.5 }}
+        >
+          <Link href="/media">
+            <Button
+              variant="outline"
+              className="border-[#D6B787] text-[#D6B787] hover:bg-[#D6B787] hover:text-[#241710] transition-colors duration-300"
+            >
+              View More Videos
+              <ArrowRight className="ml-2 w-4 h-4" />
+            </Button>
+          </Link>
         </motion.div>
       </div>
     </section>
-  );
+  )
 }

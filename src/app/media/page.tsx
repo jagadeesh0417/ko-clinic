@@ -1,71 +1,289 @@
-"use client";
+"use client"
 
-import { motion } from "framer-motion";
-import { SectionHeading } from "@/components/ui/section-heading";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Play, ArrowRight } from "lucide-react";
-import Link from "next/link";
+import { useState } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import { Play, Clock, ArrowRight } from "lucide-react"
+
+const categories = [
+  { id: "all", label: "All" },
+  { id: "hair", label: "Hair Procedures" },
+  { id: "skin", label: "Skin Treatments" },
+  { id: "injectables", label: "Injectables" },
+  { id: "stories", label: "Patient Stories" },
+  { id: "tour", label: "Clinic Tour" },
+]
 
 const videos = [
-  { title: "Hair Transplant Procedure Overview", category: "Hair Restoration", duration: "4:32" },
-  { title: "PRP Therapy Explained", category: "Skin Rejuvenation", duration: "3:15" },
-  { title: "Botox Treatment Session", category: "Injectable", duration: "5:20" },
-  { title: "Patient Success Story: Hair Transformation", category: "Testimonial", duration: "6:45" },
-  { title: "Laser Rejuvenation Procedure", category: "Skin Rejuvenation", duration: "4:10" },
-  { title: "Dr. Vikas Singh Interview", category: "Doctor", duration: "8:30" },
-  { title: "Clinic Tour - Koramangala", category: "Clinic", duration: "3:45" },
-  { title: "Thread Lift Procedure", category: "Procedures", duration: "5:55" },
-  { title: "Regenerative Medicine Insights", category: "Wellness", duration: "7:20" },
-];
+  {
+    id: 1,
+    title: "Hair Transplant Overview",
+    category: "hair",
+    duration: "4:32",
+    description:
+      "A comprehensive look at the modern hair transplant procedure, from consultation to recovery.",
+    featured: true,
+  },
+  {
+    id: 2,
+    title: "PRP Therapy Explained",
+    category: "skin",
+    duration: "3:15",
+    description:
+      "Understanding Platelet-Rich Plasma therapy and its remarkable benefits for skin rejuvenation.",
+    featured: false,
+  },
+  {
+    id: 3,
+    title: "Botox Treatment Session",
+    category: "injectables",
+    duration: "5:20",
+    description:
+      "Follow along a complete Botox treatment session with detailed explanations of each step.",
+    featured: false,
+  },
+  {
+    id: 4,
+    title: "Patient Success Story",
+    category: "stories",
+    duration: "6:45",
+    description:
+      "A heartfelt journey of transformation as a patient shares their experience at KO Clinic.",
+    featured: false,
+  },
+  {
+    id: 5,
+    title: "Laser Rejuvenation",
+    category: "skin",
+    duration: "4:10",
+    description:
+      "Discover how advanced laser technology can restore youth and vitality to your skin.",
+    featured: false,
+  },
+  {
+    id: 6,
+    title: "Dr. Vikas Interview",
+    category: "stories",
+    duration: "8:30",
+    description:
+      "An exclusive interview with Dr. Vikas on the philosophy and vision behind KO Clinic.",
+    featured: false,
+  },
+]
+
+const categoryGradients: Record<string, string> = {
+  hair: "from-amber-900/60 to-amber-700/30",
+  skin: "from-rose-900/60 to-rose-700/30",
+  injectables: "from-violet-900/60 to-violet-700/30",
+  stories: "from-emerald-900/60 to-emerald-700/30",
+  tour: "from-sky-900/60 to-sky-700/30",
+}
+
+const categoryColors: Record<string, string> = {
+  hair: "bg-amber-800/80 text-amber-100 border-amber-700",
+  skin: "bg-rose-800/80 text-rose-100 border-rose-700",
+  injectables: "bg-violet-800/80 text-violet-100 border-violet-700",
+  stories: "bg-emerald-800/80 text-emerald-100 border-emerald-700",
+  tour: "bg-sky-800/80 text-sky-100 border-sky-700",
+}
+
+const categoryLabels: Record<string, string> = {
+  hair: "Hair Procedures",
+  skin: "Skin Treatments",
+  injectables: "Injectables",
+  stories: "Patient Stories",
+  tour: "Clinic Tour",
+}
 
 export default function MediaPage() {
-  return (
-    <>
-      <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 bg-[#2A1A12]">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(213,185,138,0.06),transparent_70%)]" />
-        <div className="container-custom px-6 relative z-10">
-          <SectionHeading title="Media & Videos" subtitle="Watch" description="Educational content and procedure insights" />
-        </div>
-      </section>
+  const [activeCategory, setActiveCategory] = useState("all")
 
-      <section className="section-padding bg-[#3C281D] pt-0">
-        <div className="container-custom px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {videos.map((video, i) => (
-              <motion.div key={video.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }} className="group cursor-pointer">
-                <div className="aspect-video rounded-2xl bg-gradient-to-br from-[rgba(213,185,138,0.08)] to-[rgba(34,22,15,0.8)] border border-[rgba(213,185,138,0.1)] hover:border-[rgba(213,185,138,0.3)] transition-all duration-500 flex items-center justify-center relative overflow-hidden">
-                  <motion.div whileHover={{ scale: 1.1 }} className="w-16 h-16 rounded-full border-2 border-[#C8A96B] flex items-center justify-center group-hover:bg-[#C8A96B] transition-all duration-300">
-                    <Play className="w-6 h-6 text-[#C8A96B] group-hover:text-[#22160F] transition-colors ml-0.5" />
-                  </motion.div>
-                  <span className="absolute bottom-3 right-3 text-xs text-[#7D6B5A] bg-[rgba(34,22,15,0.8)] px-2 py-1 rounded-full font-body">{video.duration}</span>
-                </div>
-                <div className="mt-3">
-                  <Badge variant="secondary" className="mb-2 rounded-full">{video.category}</Badge>
-                  <h3 className="font-heading text-lg text-[#F5F0EA] group-hover:text-[#D5B98A] transition-all">{video.title}</h3>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mt-12">
-            <Button variant="outline">View More Videos <ArrowRight className="w-4 h-4" /></Button>
+  const filteredVideos =
+    activeCategory === "all"
+      ? videos
+      : videos.filter((v) => v.category === activeCategory)
+
+  const featured = filteredVideos.find((v) => v.featured)
+  const gridVideos = filteredVideos.filter((v) => !v.featured)
+
+  return (
+    <div className="min-h-screen bg-[#241710]">
+      <section className="relative overflow-hidden px-4 pb-16 pt-24 sm:px-6 sm:pt-32 lg:px-8">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_#D6B787_0%,_transparent_50%)] opacity-20" />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,_#B78B5E_0%,_transparent_50%)] opacity-10" />
+        <div className="relative mx-auto max-w-7xl">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="text-center"
+          >
+            <Badge className="mb-4 border-[#D6B787]/30 bg-[#D6B787]/10 px-4 py-1.5 text-[#D6B787]">
+              Video Library
+            </Badge>
+            <h1 className="font-serif text-4xl font-light tracking-wide text-[#F6F0EA] sm:text-5xl lg:text-6xl">
+              Media Library
+            </h1>
+            <p className="mx-auto mt-4 max-w-2xl text-lg text-[#8E7C6E] sm:text-xl">
+              Educational content and procedure insights
+            </p>
           </motion.div>
         </div>
       </section>
 
-      <section className="section-padding bg-[#2A1A12]">
-        <div className="container-custom px-6">
-          <SectionHeading title="Press & Features" subtitle="In The Media" description="KO Clinic's presence in global media" />
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12">
-            {["Forbes", "Vogue", "GQ", "Harper's Bazaar"].map((pub, i) => (
-              <motion.div key={pub} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
-                className="aspect-[3/2] rounded-2xl border border-[rgba(213,185,138,0.1)] flex items-center justify-center p-6 hover:border-[rgba(213,185,138,0.3)] transition-all">
-                <span className="font-heading text-2xl text-[#7D6B5A] text-center">{pub}</span>
-              </motion.div>
+      <section className="relative px-4 pb-8 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl">
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            {categories.map((category) => (
+              <button
+                key={category.id}
+                onClick={() => setActiveCategory(category.id)}
+                className={`rounded-full px-5 py-2 text-sm font-medium transition-all duration-300 ${
+                  activeCategory === category.id
+                    ? "bg-[#D6B787] text-[#241710] shadow-lg shadow-[#D6B787]/20"
+                    : "bg-[#3A281E] text-[#8E7C6E] hover:bg-[#2B1C15] hover:text-[#E8DDD1]"
+                }`}
+              >
+                {category.label}
+              </button>
             ))}
           </div>
         </div>
       </section>
-    </>
-  );
+
+      <section className="relative px-4 pb-24 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeCategory}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+            >
+              {featured && (
+                <motion.div
+                  layout
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.6, ease: "easeOut" }}
+                  className="group relative mb-10 overflow-hidden rounded-2xl"
+                >
+                  <div className="relative aspect-video w-full overflow-hidden rounded-2xl sm:aspect-[21/9]">
+                    <div
+                      className={`absolute inset-0 bg-gradient-to-br ${
+                        categoryGradients[featured.category] || "from-[#3A281E] to-[#2B1C15]"
+                      }`}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#241710]/90 via-transparent to-transparent" />
+                    <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNGRkZGRkYiIGZpbGwtb3BhY2l0eT0iMC4wMyI+PHBhdGggZD0iTTM2IDM0djItSDI0di0yaDEyek0zNiAyNHYySDI0di0yaDEyeiIvPjwvZz48L2c+PC9zdmc+')] opacity-40" />
+                    <motion.div
+                      whileHover={{ scale: 1.05 }}
+                      transition={{ duration: 0.4, ease: "easeOut" }}
+                      className="absolute inset-0 flex cursor-pointer items-center justify-center"
+                    >
+                      <div className="flex h-20 w-20 items-center justify-center rounded-full bg-[#D6B787]/90 text-[#241710] shadow-2xl shadow-[#D6B787]/30 transition-all duration-300 group-hover:scale-110 group-hover:bg-[#C5A067] sm:h-24 sm:w-24">
+                        <Play className="ml-1 h-8 w-8 sm:h-10 sm:w-10" fill="currentColor" />
+                      </div>
+                    </motion.div>
+                    <div className="absolute left-6 right-6 bottom-6 sm:left-10 sm:bottom-10">
+                      <Badge
+                        className={`mb-3 border px-3 py-1 text-xs font-medium ${
+                          categoryColors[featured.category]
+                        }`}
+                      >
+                        {categoryLabels[featured.category]}
+                      </Badge>
+                      <h3 className="font-serif text-2xl font-light text-[#F6F0EA] sm:text-3xl lg:text-4xl">
+                        {featured.title}
+                      </h3>
+                      <p className="mt-2 max-w-2xl text-sm text-[#E8DDD1]/70 sm:text-base">
+                        {featured.description}
+                      </p>
+                      <div className="mt-3 flex items-center gap-2 text-sm text-[#8E7C6E]">
+                        <Clock className="h-4 w-4" />
+                        <span>{featured.duration}</span>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+
+              {gridVideos.length > 0 ? (
+                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                  {gridVideos.map((video, index) => (
+                    <motion.div
+                      key={video.id}
+                      layout
+                      initial={{ opacity: 0, y: 30 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{
+                        duration: 0.5,
+                        delay: index * 0.1,
+                        ease: "easeOut",
+                      }}
+                      className="group relative overflow-hidden rounded-xl"
+                    >
+                      <div className="relative aspect-video w-full overflow-hidden rounded-xl">
+                        <div
+                          className={`absolute inset-0 bg-gradient-to-br ${
+                            categoryGradients[video.category] || "from-[#3A281E] to-[#2B1C15]"
+                          } transition-transform duration-500 group-hover:scale-110`}
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#241710]/90 via-transparent to-transparent" />
+                        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNGRkZGRkYiIGZpbGwtb3BhY2l0eT0iMC4wMyI+PHBhdGggZD0iTTM2IDM0djItSDI0di0yaDEyek0zNiAyNHYySDI0di0yaDEyeiIvPz48L2c+PC9zdmc+')] opacity-40" />
+                        <motion.div
+                          whileHover={{ scale: 1.08 }}
+                          transition={{ duration: 0.3, ease: "easeOut" }}
+                          className="absolute inset-0 flex cursor-pointer items-center justify-center"
+                        >
+                          <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#D6B787]/90 text-[#241710] shadow-lg shadow-[#D6B787]/20 transition-all duration-300 group-hover:scale-110 group-hover:bg-[#C5A067]">
+                            <Play className="ml-0.5 h-6 w-6" fill="currentColor" />
+                          </div>
+                        </motion.div>
+                        <div className="absolute right-3 top-3">
+                          <Badge
+                            className={`border px-2.5 py-0.5 text-[11px] font-medium ${
+                              categoryColors[video.category]
+                            }`}
+                          >
+                            {categoryLabels[video.category]}
+                          </Badge>
+                        </div>
+                      </div>
+                      <div className="bg-[#2B1C15]/80 p-4 backdrop-blur-sm">
+                        <h3 className="font-serif text-lg font-light text-[#F6F0EA] transition-colors duration-300 group-hover:text-[#D6B787]">
+                          {video.title}
+                        </h3>
+                        <p className="mt-1.5 line-clamp-2 text-sm text-[#8E7C6E]">
+                          {video.description}
+                        </p>
+                        <div className="mt-3 flex items-center gap-2 text-xs text-[#8E7C6E]">
+                          <Clock className="h-3.5 w-3.5" />
+                          <span>{video.duration}</span>
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              ) : (
+                <div className="flex flex-col items-center justify-center py-20 text-center">
+                  <p className="text-lg text-[#8E7C6E]">No videos found in this category.</p>
+                  <Button
+                    variant="outline"
+                    onClick={() => setActiveCategory("all")}
+                    className="mt-4 border-[#D6B787]/30 text-[#D6B787] hover:bg-[#D6B787]/10"
+                  >
+                    View All Videos
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </div>
+              )}
+            </motion.div>
+          </AnimatePresence>
+        </div>
+      </section>
+    </div>
+  )
 }
