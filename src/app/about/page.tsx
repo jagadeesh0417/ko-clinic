@@ -68,7 +68,7 @@ export default function AboutPage() {
             >
               <div className="aspect-[3/4] rounded-2xl bg-[#2B1C15] border border-[rgba(214,183,135,0.15)] flex items-center justify-center overflow-hidden">
                 <Image
-                  src={images.aboutDoctor.vikas}
+                  src={images.doctors.aesthetics}
                   alt="Dr. Vikas Singh"
                   fill
                   className="object-cover object-top"

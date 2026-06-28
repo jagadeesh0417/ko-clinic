@@ -1,37 +1,37 @@
 import { Hero } from "@/components/home/Hero";
-import { Introduction } from "@/components/home/Introduction";
-import { AboutDoctor } from "@/components/home/AboutDoctor";
-import { WhyChooseUs } from "@/components/home/WhyChooseUs";
-import ConditionsWeTreat from "@/components/home/ConditionsWeTreat";
-import { FeaturedTreatments } from "@/components/home/FeaturedTreatments";
-import { DoctorSection } from "@/components/home/DoctorSection";
-import { BeforeAfterSlider } from "@/components/home/BeforeAfterSlider";
-import MidPageCTA from "@/components/home/MidPageCTA";
+import { GlobalPresence } from "@/components/home/GlobalPresence";
+import { FeaturedDestinations } from "@/components/home/FeaturedDestinations";
+import { ConciergeServices } from "@/components/home/ConciergeServices";
+import { LuxuryJourney } from "@/components/home/LuxuryJourney";
+import { WhyKO } from "@/components/home/WhyKO";
+import { PartnerNetwork } from "@/components/home/PartnerNetwork";
+import { DoctorShowcase } from "@/components/home/DoctorShowcase";
+import { SuccessStories } from "@/components/home/SuccessStories";
 import { Testimonials } from "@/components/home/Testimonials";
-import { VideoLibrary } from "@/components/home/VideoLibrary";
-import { InstagramSection } from "@/components/home/InstagramSection";
-import { ClinicExperience } from "@/components/home/ClinicExperience";
-import { GlobalLocations } from "@/components/home/GlobalLocations";
-import { BlogSection } from "@/components/home/BlogSection";
+import { Awards } from "@/components/home/Awards";
+import { GlobalStats } from "@/components/home/GlobalStats";
+import { InteractiveGlobe } from "@/components/home/InteractiveGlobe";
+import { Insights } from "@/components/home/Insights";
+import { FAQ } from "@/components/home/FAQ";
 
 export default function Home() {
   return (
     <>
       <Hero />
-      <Introduction />
-      <AboutDoctor />
-      <WhyChooseUs />
-      <ConditionsWeTreat />
-      <FeaturedTreatments />
-      <DoctorSection />
-      <BeforeAfterSlider />
-      <MidPageCTA />
+      <GlobalPresence />
+      <FeaturedDestinations />
+      <ConciergeServices />
+      <LuxuryJourney />
+      <WhyKO />
+      <PartnerNetwork />
+      <DoctorShowcase />
+      <SuccessStories />
       <Testimonials />
-      <VideoLibrary />
-      <InstagramSection />
-      <ClinicExperience />
-      <GlobalLocations />
-      <BlogSection />
+      <Awards />
+      <GlobalStats />
+      <InteractiveGlobe />
+      <Insights />
+      <FAQ />
     </>
   );
 }

@@ -40,41 +40,44 @@ const montserrat = Montserrat({
 
 export const metadata: Metadata = {
   title: {
-    default: "KO CLINIC | Premium Aesthetics by Dr. Vikas Singh | Kosmedixx",
-    template: "%s | KO CLINIC",
+    default: "KO CLINICS | Global Luxury Healthcare & Wellness Concierge",
+    template: "%s | KO CLINICS",
   },
   description:
-    "KO CLINIC by Kosmedixx — Dr. Vikas Singh. Luxury hair restoration, skin rejuvenation, regenerative medicine & cosmetic dermatology. 20+ years of transforming confidence.",
+    "KO CLINICS — an ultra-luxury international healthcare platform connecting discerning patients with the world's finest clinics. Destination-first concierge medical travel across Dubai, London, Singapore, Paris, New York, Hong Kong, Sydney, Bahrain & Abu Dhabi.",
   keywords: [
-    "KO CLINIC",
-    "Kosmedixx",
-    "Dr Vikas Singh",
-    "hair transplant",
-    "cosmetic dermatology",
-    "aesthetic clinic",
-    "botox",
-    "fillers",
-    "PRP therapy",
-    "exosome therapy",
-    "thread lift",
-    "skin rejuvenation",
-    "Bengaluru",
-    "India",
+    "KO CLINICS",
+    "luxury healthcare",
+    "medical concierge",
+    "healthcare travel",
+    "destination medicine",
+    "premium clinics",
+    "international healthcare",
+    "wellness retreat",
+    "Dubai healthcare",
+    "London medical",
+    "Singapore clinic",
+    "Paris healthcare",
+    "New York medical",
+    "Hong Kong clinic",
+    "Sydney healthcare",
+    "Bahrain medical",
+    "Abu Dhabi clinic",
   ],
   openGraph: {
-    title: "KO CLINIC | Premium Aesthetics by Dr. Vikas Singh",
+    title: "KO CLINICS | Global Luxury Healthcare & Wellness Concierge",
     description:
-      "Transforming Confidence Through Science & Art. Luxury hair, skin & aesthetic treatments.",
-    url: "https://koclinic.co",
-    siteName: "KO CLINIC",
+      "World-class healthcare, reimagined. Destination-first luxury medical concierge across 9 global cities.",
+    url: "https://koclinics.com",
+    siteName: "KO CLINICS",
     locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "KO CLINIC | Premium Aesthetics",
+    title: "KO CLINICS | Global Luxury Healthcare",
     description:
-      "Transforming Confidence Through Science & Art.",
+      "World-class healthcare, reimagined. Destination-first luxury medical concierge across 9 global cities.",
   },
   robots: {
     index: true,
@@ -89,7 +92,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${cormorant.variable} ${playfair.variable} ${inter.variable} ${montserrat.variable}`}>
-      <body className="min-h-screen bg-[#241710] text-[#F6F0EA] antialiased">
+      <body className="min-h-screen bg-ivory text-text-primary antialiased">
         <Preloader />
         <SmoothScroll>
           <Header />

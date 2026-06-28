@@ -1,154 +1,118 @@
 "use client";
 
-import { useRef, useEffect } from "react";
-import { motion } from "framer-motion";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, EffectCoverflow } from "swiper/modules";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { SectionHeading } from "@/components/ui/section-heading";
-import { Badge } from "@/components/ui/badge";
-import { Star } from "lucide-react";
-
-import "swiper/css";
-import "swiper/css/effect-coverflow";
-
-gsap.registerPlugin(ScrollTrigger);
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Quote, ChevronLeft, ChevronRight, Star } from "lucide-react";
+import { images } from "@/lib/images";
 
 const testimonials = [
   {
+    quote: "KO CLINICS transformed what could have been an overwhelming medical journey into an absolute pleasure. From the consultation to recovery, every detail was handled with precision and care. I felt like the only patient in the world.",
+    author: images.testimonials[0],
+    name: "Alexander Petrov",
+    location: "Moscow → Dubai",
+    rating: 5,
+  },
+  {
+    quote: "The level of discretion and professionalism exceeded every expectation. My personal concierge anticipated needs I didn't even know I had. This is how healthcare should be — seamless, private, and truly world-class.",
+    author: images.testimonials[1],
+    name: "Sarah Al Maktoum",
+    location: "Abu Dhabi → London",
+    rating: 5,
+  },
+  {
+    quote: "I've experienced medical care on four continents, and nothing compares to the KO CLINICS standard. The coordination between my London specialist and the Singapore facility was flawless. Absolutely worth every moment.",
+    author: images.testimonials[2],
+    name: "James Mitchell",
+    location: "New York → Singapore",
+    rating: 5,
+  },
+  {
+    quote: "As someone who values privacy above all, KO CLINICS provided a level of confidentiality I didn't think possible. The entire journey was handled with elegance, from the virtual consultation to the final follow-up.",
+    author: images.testimonials[3],
     name: "Priya Sharma",
-    location: "Bengaluru",
-    content: "The thread lift was incredible. I look 10 years younger. Dr. Vikas and his team made me feel completely at ease throughout the procedure.",
+    location: "Mumbai → Paris",
     rating: 5,
-    treatment: "Thread Lift",
-  },
-  {
-    name: "Rahul Mehta",
-    location: "Mumbai",
-    content: "Dr Vikas transformed my confidence completely. The hair transplant results are beyond what I imagined. Truly world-class care.",
-    rating: 5,
-    treatment: "Hair Transplant",
-  },
-  {
-    name: "Ananya Kapoor",
-    location: "Dubai",
-    content: "Professional, gentle and highly experienced. The PRP therapy sessions have made a remarkable difference to my skin health.",
-    rating: 5,
-    treatment: "PRP Therapy",
-  },
-  {
-    name: "Vikram Reddy",
-    location: "Hong Kong",
-    content: "I travelled from Hong Kong specifically for this clinic. The international standards of care and the results were absolutely worth it.",
-    rating: 5,
-    treatment: "Exosome Therapy",
-  },
-  {
-    name: "Neha Gupta",
-    location: "Delhi",
-    content: "The Morpheus MNRF completely transformed my skin texture. Minimal downtime, maximum results. Highly recommend.",
-    rating: 5,
-    treatment: "Morpheus MNRF",
-  },
-  {
-    name: "Arjun Nair",
-    location: "Kochi",
-    content: "Outstanding international standards of medical care right here in India. The consultation was thorough and results exceeded expectations.",
-    rating: 5,
-    treatment: "Botox",
   },
 ];
 
 export function Testimonials() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const headerRef = useRef<HTMLDivElement>(null);
+  const [current, setCurrent] = useState(0);
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        headerRef.current,
-        { y: 30, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.8, ease: "power2.out",
-          scrollTrigger: { trigger: headerRef.current, start: "top 85%", toggleActions: "play none none none" },
-        }
-      );
-    }, sectionRef);
-    return () => ctx.revert();
-  }, []);
+  const prev = () => setCurrent((c) => (c === 0 ? testimonials.length - 1 : c - 1));
+  const next = () => setCurrent((c) => (c === testimonials.length - 1 ? 0 : c + 1));
 
   return (
-    <section ref={sectionRef} className="section-padding bg-[#241710]">
-      <div className="container-custom">
-        <div ref={headerRef}>
-          <SectionHeading title="Patient Stories" subtitle="Testimonials" description="Hear from our patients about their transformation journey" />
-        </div>
+    <section className="section-luxury bg-ivory">
+      <div className="container-luxury">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="text-center mb-16"
+        >
+          <span className="font-button text-[10px] uppercase tracking-[0.3em] text-champagne-dark mb-4 block">
+            Testimonials
+          </span>
+          <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-light text-deep-black leading-[1.1] text-balance">
+            What Our Patients
+            <br />
+            <span className="font-medium">Say About Us</span>
+          </h2>
+        </motion.div>
 
-        <div className="mt-10 sm:mt-12 -mx-2 sm:-mx-4">
-          <Swiper
-            modules={[Autoplay, EffectCoverflow]}
-            effect="coverflow"
-            grabCursor
-            centeredSlides
-            slidesPerView="auto"
-            coverflowEffect={{
-              rotate: 0,
-              stretch: 0,
-              depth: 80,
-              modifier: 1.5,
-              slideShadows: false,
-            }}
-            autoplay={{
-              delay: 4000,
-              disableOnInteraction: false,
-            }}
-            loop
-            speed={800}
-            className="pb-6 sm:pb-8"
-            breakpoints={{
-              320: { slidesPerView: 1.1, spaceBetween: 12 },
-              640: { slidesPerView: 1.5, spaceBetween: 16 },
-              768: { slidesPerView: 2, spaceBetween: 20 },
-              1024: { slidesPerView: 3, spaceBetween: 24 },
-              1280: { slidesPerView: 4, spaceBetween: 28 },
-            }}
-          >
-            {testimonials.map((t, i) => (
-              <SwiperSlide key={i} className="!h-auto">
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: i * 0.05 }}
-                  className="h-full p-5 sm:p-6 md:p-8 rounded-2xl bg-[rgba(58,40,30,0.5)] border border-[rgba(214,183,135,0.06)] hover:border-[rgba(214,183,135,0.15)] transition-all duration-500 flex flex-col group"
-                >
-                  <div className="text-[#D6B787] text-4xl sm:text-5xl leading-none mb-3 sm:mb-4 font-serif opacity-60">&ldquo;</div>
-                  <p className="text-[#8E7C6E] text-xs sm:text-sm leading-relaxed mb-4 sm:mb-6 font-body flex-1">
-                    {t.content}
-                  </p>
-                  <div className="flex items-center gap-1 mb-3 sm:mb-4">
-                    {Array.from({ length: 5 }).map((_, s) => (
-                      <Star
-                        key={s}
-                        className={`w-3 h-3 sm:w-3.5 sm:h-3.5 ${
-                          s < t.rating
-                            ? "fill-[#C5A067] text-[#C5A067]"
-                            : "fill-none text-[rgba(214,183,135,0.2)]"
-                        }`}
-                      />
-                    ))}
-                  </div>
-                  <div className="space-y-0.5">
-                    <p className="text-[#F6F0EA] font-heading text-sm sm:text-base">{t.name}</p>
-                    <p className="text-[#8E7C6E] text-xs font-body">{t.location}</p>
-                  </div>
-                  <div className="mt-2 sm:mt-3">
-                    <Badge variant="default" className="text-[9px] sm:text-[10px]">{t.treatment}</Badge>
-                  </div>
-                </motion.div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
+        <div className="max-w-3xl mx-auto">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={current}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+              className="text-center"
+            >
+              <Quote className="w-10 h-10 text-champagne/30 mx-auto mb-6" />
+              <blockquote className="font-heading text-xl sm:text-2xl md:text-3xl font-light text-deep-black leading-relaxed mb-8 text-balance">
+                &ldquo;{testimonials[current].quote}&rdquo;
+              </blockquote>
+              <div className="flex items-center justify-center gap-1 mb-4">
+                {Array.from({ length: testimonials[current].rating }).map((_, i) => (
+                  <Star key={i} className="w-4 h-4 fill-champagne text-champagne" />
+                ))}
+              </div>
+              <div className="flex items-center justify-center gap-3">
+                <div
+                  className="w-10 h-10 rounded-full bg-cover bg-center"
+                  style={{ backgroundImage: `url(${testimonials[current].author})` }}
+                />
+                <div className="text-left">
+                  <div className="font-heading text-base font-medium text-deep-black">{testimonials[current].name}</div>
+                  <div className="font-body text-xs text-mid-gray">{testimonials[current].location}</div>
+                </div>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+
+          <div className="flex items-center justify-center gap-4 mt-10">
+            <button onClick={prev} className="w-10 h-10 rounded-full border border-champagne/20 flex items-center justify-center text-champagne-dark hover:bg-champagne/10 transition-all">
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+            <div className="flex gap-2">
+              {testimonials.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setCurrent(i)}
+                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                    i === current ? "bg-champagne-dark w-6" : "bg-champagne/30"
+                  }`}
+                />
+              ))}
+            </div>
+            <button onClick={next} className="w-10 h-10 rounded-full border border-champagne/20 flex items-center justify-center text-champagne-dark hover:bg-champagne/10 transition-all">
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
         </div>
       </div>
     </section>
